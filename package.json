@@ -1,0 +1,17 @@
+{
+  "name": "monochrome-fighter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server app -p 8080 -c-1",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -R dist && mkdir dist && mkdir dist/js && uglifyjs --compress --mangle app/js/game.js && cp app/index.html dist/"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "uglify-js": "^3.17.4"
+  }
+}
