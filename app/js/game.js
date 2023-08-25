@@ -37,9 +37,16 @@
                 compressed: [170,170,170,170,170,170,170,166,170,170,170,170,170,166,166,154,170,170,170,169,153,153,170,106,170,170,154,105,154,170,170,170,169,170,153,170,101,89,90,150,165,154,166,106,154,170,153,169,170,101,105,106,154,105,154,166,106,154,170,106,105,170,102,169,170,169,154,149,102,106,149,170,166,170,170,170,170,170,170,170,170,170,170,170]
             },
 
-            FIGHTER: {
+            SHIP_1: {
                 res: { w: 32, h: 32 },
-                compressed: [-20, 64, -6, 1, 144, -6, 1, 144, -6, 1, 144, -6, 2, 160, -6, 2, 96, -6, 2, 96, -6, 1, 144, -6, 5, 144, -6, 6, 144, -6, 6, 144, -6, 26, 164, -6, 106, 169, -4, 0, 1, 170, 170, 64, -3, 4, 70, 170, 170, 145, 16, 0, 0, 4, 90, 170, 170, 165, 16, 0, 0, 5, 170, 170, 170, 169, 80, 0, 0, 6, 170, 170, 170, 170, 144, 0, 0, 6, 170, 170, 170, 170, 144, 0, 0, 5, 85, 90, 165, 85, 80, -4, 6, 144, -6, 6, 144, -6, 26, 164, -6, 106, 169, -4, 0, 1, 165, 90, 64, -4, 1, 80, 5, 64, -34]
+                generateInverted: true,
+                compressed: [-20,42,-7,37,160,-6,42,-7,32,-7,32,-7,32,-7,32,-6,1,164,-6,4,164,-6,22,36,-6,72,36,-5,1,24,36,-5,4,88,36,-5,16,88,36,-5,64,88,36,-4,1,-1,88,36,-4,4,-1,88,36,-4,16,-1,24,36,-4,64,-1,8,36,-2,32,26,64,-1,2,36,42,170,160,-1,168,-2,164,149,85,160,-1,38,170,160,38,85,85,160,-1,41,85,90,169,86,170,128,-1,2,170,165,85,90,170,-3,42,170,170,170,170,-3,42,170,170,170,168,-3,10,170,170,170,168,-3,2,170,170,170,160,-4,170,170,170,128,-9]
+            },
+
+            SHIP_2: {
+                res: { w: 32, h: 32 },
+                generateInverted: true,
+                compressed: [-20,42,-7,38,128,-6,42,-7,32,-7,32,-7,32,-7,32,-6,1,164,-6,4,164,-6,22,36,-6,72,36,-5,1,24,36,-5,4,24,36,-5,16,24,36,-5,64,24,36,-4,1,-1,24,36,-4,4,-1,24,36,-4,16,-1,24,36,-4,64,-1,8,36,-2,32,10,64,-1,2,36,42,170,170,2,168,-2,164,149,85,168,-1,166,170,160,38,85,85,160,-1,41,85,90,169,85,86,128,-1,10,165,85,85,86,170,-2,2,170,85,85,90,170,-3,170,170,170,170,168,-3,42,170,170,170,168,-3,2,170,170,170,160,-4,170,170,170,128,-9]
             },
 
             BULLET: {
@@ -67,22 +74,18 @@
                 compressed: [-1,8,-4,8,-2,42,-4,42,-2,166,128,-3,166,128,2,149,160,-2,2,149,160,10,85,104,-2,10,85,104,41,89,90,-2,41,85,138,149,86,86,128,-1,165,86,106,37,85,149,160,2,149,90,104,41,85,101,104,10,85,105,96,9,85,105,90,41,85,165,96,9,85,90,86,37,85,149,96,9,85,86,86,37,90,85,104,10,165,101,86,37,89,90,170,-1,37,101,86,37,85,90,170,-1,37,105,86,37,89,86,-2,165,86,86,37,105,86,-2,149,85,170,37,165,86,-1,2,149,165,90,37,86,150,128,10,86,153,86,37,89,170,128,-1,170,150,86,37,101,168,-2,2,149,154,169,149,160,-3,165,101,86,86,128,-3,41,101,86,90,-4,10,149,85,168,-4,2,101,86,96,-4,9,169,90,152,-4,9,101,86,88,-4,2,85,85,96,-5,153,89,128,-5,149,85,128,-5,37,86,-6,10,168,-3]
             },
 
-            TREE: {
-                isBackground: true,
-                res: { w: 26, h: 26 },
-                compressed: [0, 0, 0, 84, -4, 0, 21, 85, -4, 21, 85, 84, -3, 5, 85, 85, 80, 0, 0, 85, 85, 85, 85, 64, 0, 21, 85, 85, 85, 85, 80, 5, 85, 85, 85, 85, 85, 65, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 86, 85, 65, 85, 84, 2, 128, 165, 80, 5, 86, 160, 40, 10, 128, 0, 0, 26, 170, 2, 160, -3, 106, 160, 42, -4, 170, 10, 128, -4, 160, 160, -4, 10, 168, -4, 0, 42, -4, 0, 2, 160, -4, 0, 42, -4, 0, 2, 160, -4, 1, 106, 64, -4, 102, 165, 64, -3, 21, 90, 85, -3, 1, 85, 85, 80, 0]
+            WATER_1: {
+                c1: '#4ebcb9',
+                c2: '#349aa4',
+                res: { w: 24, h: 24 },
+                compressed: [85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,86,85,85,89,85,85,85,85,85,86,149,85,85,85,89,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,169,85,85,85,85,86,86,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,89,85,85,89,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,149,85,85,105,85,85,85,85,85,85,85,85,86,86,85,85,85,85,85,169,85,85,89,85,85,85,85,85,85]
             },
 
-            CASTLE: {
-                isBackground: true,
-                res: { w: 46, h: 46 },
-                compressed: [-51,5,80,-10,105,64,-9,10,165,-10,170,144,-9,10,164,-10,128,-5,84,21,5,64,-1,8,-2,80,20,1,74,66,160,104,-1,10,168,-1,10,2,128,104,164,42,6,128,-1,149,128,-1,160,40,6,138,170,170,168,-1,9,88,-1,10,170,170,168,149,85,85,128,-1,149,128,-1,149,85,85,138,165,86,168,-1,9,88,-1,10,165,86,168,6,85,100,-1,6,170,164,-1,6,85,100,-1,101,86,64,-1,101,86,64,-1,101,86,64,6,85,100,34,6,85,100,34,6,85,100,-1,101,86,66,160,101,86,66,160,101,86,64,6,85,100,42,6,85,100,42,6,85,100,-1,101,86,170,170,170,170,170,170,165,86,64,6,85,85,85,85,85,85,85,85,85,100,-1,101,85,85,85,85,85,85,85,85,86,64,6,85,85,85,85,85,85,85,85,85,100,-1,101,85,85,85,85,85,85,85,85,86,64,6,85,85,89,85,85,85,89,85,85,100,-1,101,85,86,165,85,85,86,165,85,86,64,6,85,85,106,85,85,85,106,85,85,100,-1,101,85,85,85,85,85,85,85,85,86,64,6,85,85,85,85,85,85,85,85,85,100,-1,101,85,85,85,85,149,85,85,85,86,64,6,85,85,85,85,170,149,85,85,85,100,-1,101,85,85,85,106,170,85,85,85,86,64,6,85,85,85,90,170,169,85,85,85,100,-1,101,85,85,85,170,170,149,85,85,86,64,6,85,85,85,90,170,169,85,85,85,100,-1,101,85,85,85,170,170,149,85,85,86,64,6,85,85,85,90,170,169,85,85,85,100,-1,101,85,85,85,170,170,149,85,85,86,64,6,85,85,85,90,170,169,85,85,85,100,-1,101,85,85,85,170,170,149,85,85,86,64,169,85,85,85,90,170,169,85,85,85,106,137,85,85,85,85,170,170,149,85,85,85,90,170,170,170,170,166,170,166,170,170,170,170,160,-11]
-            },
-
-            TOWER: {
-                isBackground: true,
-                res: { w: 28, h: 64 },
-                compressed: [-7,8,-1,128,8,-1,32,8,10,-1,128,42,-1,32,40,10,2,128,42,-1,40,40,10,2,128,42,-1,40,40,10,2,128,42,-1,40,40,10,2,128,42,-1,40,40,10,170,170,170,170,170,168,10,170,168,-3,8,10,85,85,85,85,85,104,10,85,85,85,85,85,168,10,85,85,85,85,86,160,10,165,85,85,85,90,128,2,169,85,85,85,106,128,-1,10,85,85,85,160,-2,10,149,85,86,160,-2,10,165,85,90,160,-2,10,169,85,106,160,-2,10,170,85,106,160,-2,10,170,85,106,160,-2,10,170,85,106,160,-2,10,169,85,90,160,-2,10,165,85,86,160,-2,10,149,85,85,160,-2,10,85,85,85,96,-2,42,85,85,85,90,-2,42,85,85,85,106,-2,42,149,85,85,170,-2,42,165,85,86,170,-2,42,165,85,90,170,-2,42,165,85,90,170,-2,42,165,85,90,170,-2,42,149,85,86,170,-2,42,85,85,85,170,-2,41,85,85,85,170,-2,37,85,85,85,106,-1,2,149,85,85,85,90,-1,2,170,85,85,85,86,128,2,170,149,85,85,90,128,2,170,165,85,85,106,128,2,170,165,85,85,170,128,2,170,165,85,86,170,128,2,170,165,85,86,170,128,2,170,149,85,86,170,128,2,170,85,85,86,170,128,2,169,85,85,85,170,128,2,165,85,85,85,106,128,2,149,85,85,85,86,128,42,85,85,85,85,85,168,42,85,85,85,85,85,168,42,85,85,85,85,86,168,42,85,85,85,85,86,168,42,85,85,85,85,86,168,42,85,85,85,85,86,168,42,85,85,64,85,86,168,42,85,85,-1,21,86,168,42,85,85,-1,21,85,168,42,85,84,-1,5,86,168,42,149,84,-1,5,90,168,2,165,84,-1,5,106,128,2,169,84,-1,5,106,128,2,170,148,-1,5,170,128,-2,164,-1,6,128,-3,170,170,170,128,-1]
+            WATER_2: {
+                c1: '#4ebcb9',
+                c2: '#349aa4',
+                res: { w: 24, h: 24 },
+                compressed: [85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,89,85,85,101,85,85,90,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,86,86,85,85,85,85,85,169,85,85,85,85,85,85,85,85,85,89,85,85,89,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,85,86,85,85,85,85,85,85,85,85,85,85,85,85,85,85,86,85,169,85,85,85,85,86,86,85,85,85,85,85,85,85,85,105,85,85,85,85,85,85]
             },
 
             EXPLOSION_1: {
@@ -189,7 +192,7 @@
     const GAME_FIGHTER_LIFES = 5;
 
     const GAME_SCENE_LVL_1 = 2;
-    const GAME_SCENE_LVL_1_FIGHTER = 2;
+    const GAME_SCENE_LVL_1_SHIP = 2;
     const GAME_SCENE_LVL_1_ORDINARY_BULLET = 3;
     const GAME_SCENE_LVL_1_ENEMY_1 = 4;
     const GAME_SCENE_LVL_1_BACKGROUND = 5;
@@ -288,28 +291,51 @@
             const tempCtx = tempCanvas.getContext('2d');
             let totalPixels = 0;
             const imageData = sprite['data'];
-            let y = 0;
-            do {
-                for (let x = 0; x < sprite.res.w; x++) {
-                    const pixel = imageData[x + totalPixels];
-                    if (pixel === 0) {
-                        continue;
+            let y = 0, primaryColor, secondaryColor;
+            if (image.c1 && image.c2) {
+                primaryColor = image.c1;
+                secondaryColor = image.c2;
+            } else {
+                primaryColor = '#999';
+                secondaryColor = '#000';
+            }
+            const draw = invert => {
+                do {
+                    for (let x = 0; x < sprite.res.w; x++) {
+                        const pixel = imageData[x + totalPixels];
+                        if (pixel === 0) {
+                            continue;
+                        }
+                        tempCtx.fillStyle = pixel === 1 ? primaryColor : secondaryColor;
+                        tempCtx.fillRect(0 + x, y, 1, 1);
                     }
-                    if (sprite.isBackground) {
-                        tempCtx.fillStyle = pixel === 1 ? '#CCC' : '#EEE';
-                    } else {
-                        tempCtx.fillStyle = pixel === 1 ? '#999' : '#000';
-                    }
-                    tempCtx.fillRect(0 + x, y, 1, 1);
+                    totalPixels += sprite.res.w;
+                    y += 1;
+                } while (totalPixels < imageData.length);
+                tempCtx.fillStyle = '#000';
+                if (invert) {
+                    tempCtx.translate(tempCanvas.width / 2, tempCanvas.height / 2);
+                    tempCtx.scale(-1, 1);
                 }
-                totalPixels += sprite.res.w;
-                y += 1;
-            } while (totalPixels < imageData.length);
-            tempCtx.fillStyle = '#000';
-            const png = tempCanvas.toDataURL('image/png');
-            const pngImage = new Image();
-            pngImage.src = png;
-            sprite.png = pngImage;
+                const png = tempCanvas.toDataURL('image/png');
+                const pngImage = new Image();
+                pngImage.src = png;
+                sprite.png = pngImage;
+                if (invert) {
+                    tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+                    tempCtx.translate(tempCanvas.width, 0);
+                    tempCtx.scale(-1, 1);
+                    tempCtx.drawImage(pngImage, 0, 0);
+                    const invertedImage = new Image();
+                    invertedImage.src = tempCanvas.toDataURL('image/png');
+                    sprite.invertedPng = invertedImage;
+                    document.body.appendChild(invertedImage);
+                }
+            };
+            draw();
+            if (sprite.generateInverted) {
+                draw(true);
+            }
         });
     }
 
@@ -365,13 +391,6 @@
                 GAME_STATE.scene = GAME_SCENE_TITLE_SCREEN;
                 GAME_STATE.selectedMenu = GAME_SCENE_TITLE_START_GAME_TEXT;
                 GAME_STATE.sprites = [
-                    {
-                        frames: [GAME_ASSETS.IMAGES.TOWER.png],
-                        res: { w: 28, h: 64 },
-                        x: 50,
-                        y: 440,
-                        scale: 1.8
-                    },
                     {
                         id: GAME_SCENE_TITLE_ARROW_SPRITE,
                         frames: [GAME_ASSETS.IMAGES.ARROW.png],
@@ -435,7 +454,7 @@
                 GAME_STATE.sprites = [
                     {
                         id: GAME_SCENE_TITLE_DRAGON_SPRITE,
-                        frames: [GAME_ASSETS.IMAGES.FIGHTER.png],
+                        frames: [GAME_ASSETS.IMAGES.SHIP_1.png],
                         res: { w: 32, h: 32 },
                         x: 350,
                         y: 100,
@@ -478,22 +497,24 @@
 
             case GAME_SCENE_LVL_1:
                 GAME_STATE.scene = GAME_SCENE_LVL_1;
-                GAME_STATE.PLAYER_LIMIT_X = (GAME_RESOLUTION.w - GAME_ASSETS.IMAGES.FIGHTER.res.w);
-                GAME_STATE.PLAYER_LIMIT_Y = (GAME_RESOLUTION.h - GAME_ASSETS.IMAGES.FIGHTER.res.h);
+                GAME_STATE.PLAYER_LIMIT_X = (GAME_RESOLUTION.w - GAME_ASSETS.IMAGES.SHIP_1.res.w);
+                GAME_STATE.PLAYER_LIMIT_Y = (GAME_RESOLUTION.h - GAME_ASSETS.IMAGES.SHIP_1.res.h);
                 GAME_STATE.tilesets = [];
                 GAME_STATE.score = 0;
                 GAME_STATE.enemiesCount = 0;
                 GAME_STATE.timecontrol = 0;
                 GAME_STATE.sprites = [
                     {
-                        id: GAME_SCENE_LVL_1_FIGHTER,
-                        frames: [GAME_ASSETS.IMAGES.FIGHTER.png],
+                        id: GAME_SCENE_LVL_1_SHIP,
+                        frames: [GAME_ASSETS.IMAGES.SHIP_1.png, GAME_ASSETS.IMAGES.SHIP_2.png],
+                        invertedFrames: [GAME_ASSETS.IMAGES.SHIP_1.invertedPng, GAME_ASSETS.IMAGES.SHIP_2.invertedPng],
                         res: { w: 32, h: 32 },
                         x: 385,
                         y: 550,
                         forceX: 0,
                         forceY: 0,
-                        missleReady: 0
+                        missleReady: 0,
+                        frame: 0
                     }
                 ];
                 GAME_STATE.texts = [
@@ -512,40 +533,20 @@
                         visible: false
                     }
                 ];
-                GAME_STATE.screenForce = 3;
-                for (let i = 0; i < 30; i++) {
-                    if (randomIntFromInterval(0, 10) === 9) {
+                GAME_STATE.screenForce = 1;
+                for (let coverX=-100; coverX<(GAME_RESOLUTION.w); coverX += 24) {
+                    for (let coverY=0; coverY<(GAME_RESOLUTION.h * 1.8); coverY += 24) {
                         GAME_STATE.sprites.unshift({
                             id: GAME_SCENE_LVL_1_BACKGROUND,
-                            frames: [GAME_ASSETS.IMAGES.TOWER.png],
-                            res: { w: 28, h: 64 },
-                            x: randomIntFromInterval(0, GAME_RESOLUTION.w),
-                            y: randomIntFromInterval(0, GAME_RESOLUTION.h),
-                            forceX: 0,
-                            forceY: 0
-                        });
-                    } else if (randomIntFromInterval(0, 10) > 8) {
-                        GAME_STATE.sprites.unshift({
-                            id: GAME_SCENE_LVL_1_BACKGROUND,
-                            frames: [GAME_ASSETS.IMAGES.CASTLE.png],
-                            res: { w: 46, h: 46 },
-                            x: randomIntFromInterval(0, GAME_RESOLUTION.w),
-                            y: randomIntFromInterval(0, GAME_RESOLUTION.h),
-                            forceX: 0,
-                            forceY: 0
-                        });
-                    } else {
-                        GAME_STATE.sprites.unshift({
-                            id: GAME_SCENE_LVL_1_BACKGROUND,
-                            frames: [GAME_ASSETS.IMAGES.TREE.png],
-                            res: { w: 26, h: 26 },
-                            x: randomIntFromInterval(0, GAME_RESOLUTION.w),
-                            y: randomIntFromInterval(0, GAME_RESOLUTION.h),
-                            forceX: 0,
-                            forceY: 0
+                            frames: [GAME_ASSETS.IMAGES.WATER_1.png, GAME_ASSETS.IMAGES.WATER_2.png],
+                            res: { w: 24, h: 24 },
+                            x: coverX,
+                            frame: 0,
+                            y: coverY
                         });
                     }
                 }
+
                 for (let i = 0; i < GAME_FIGHTER_LIFES; i++) {
                     GAME_STATE.sprites.push({
                         id: GAME_SCENE_LVL_1_LIFE,
@@ -591,7 +592,7 @@
                 }
                 continue;
             }
-            const image = sprite.frames[sprite.frame || 0];
+            const image = sprite.inverted ? sprite.invertedFrames[sprite.frame || 0] : sprite.frames[sprite.frame || 0];
             if (sprite.scale) {
                 const width = sprite.res.w;
                 const height = sprite.res.h;
@@ -734,8 +735,8 @@
                     res: { w: 32, h: 32 },
                     x: randomIntFromInterval(10, 750),
                     y: randomIntFromInterval(-40, -120),
-                    forceX: randomIntFromInterval(0, 5) - 3,
-                    forceY: randomIntFromInterval(2, 6),
+                    forceX: randomIntFromInterval(1, 3),
+                    forceY: randomIntFromInterval(1, 2),
                     awaiting: randomIntFromInterval(0, 200),
                     frame: 0
                 });
@@ -744,7 +745,6 @@
             if (GAME_STATE.timecontrol > 80 && // FIXME more time
                 GAME_STATE.enemiesCount < 13) {
 
-                GAME_STATE.screenForce = 20;    
                 GAME_STATE.enemiesCount += 1;
                 GAME_STATE.sprites.push({
                     id: GAME_SCENE_LVL_1_ENEMY_2,
@@ -752,8 +752,8 @@
                     res: { w: 32, h: 32 },
                     x: randomIntFromInterval(10, 750),
                     y: randomIntFromInterval(-40, -120),
-                    forceX: randomIntFromInterval(0, 5) - 3,
-                    forceY: randomIntFromInterval(2, 6),
+                    forceX: randomIntFromInterval(1, 4),
+                    forceY: randomIntFromInterval(1, 2),
                     awaiting: randomIntFromInterval(0, 200),
                     life: 2
                 });
@@ -762,7 +762,6 @@
             if (GAME_STATE.timecontrol > 210 && // FIXME more time
                 GAME_STATE.enemiesCount < 16) {
 
-                GAME_STATE.screenForce = (GAME_STATE.screenForce < 50) ? 50 : GAME_STATE.screenForce;
                 GAME_STATE.enemiesCount += 1;
                 GAME_STATE.sprites.push({
                     id: GAME_SCENE_LVL_1_ENEMY_3,
@@ -770,21 +769,24 @@
                     res: { w: 32, h: 32 },
                     x: randomIntFromInterval(10, 750),
                     y: randomIntFromInterval(-40, -120),
-                    forceX: randomIntFromInterval(0, 5) - 1,
-                    forceY: randomIntFromInterval(3, 6),
+                    forceX: randomIntFromInterval(1, 4),
+                    forceY: randomIntFromInterval(1, 4),
                     awaiting: randomIntFromInterval(0, 200),
                     life: 4
                 });
             }
         }
 
-        let airplaneSprite, enemySprites = [], bullets = [], allyMissle, bonuses = [];
+        let shipSprite, enemySprites = [], bullets = [], allyMissle, bonuses = [];
         for (const sprite of GAME_STATE.sprites) {
             if (sprite.id === GAME_SCENE_LVL_1_BACKGROUND) {
                 sprite.y += GAME_STATE.screenForce;
-                if (sprite.y > (GAME_RESOLUTION.h + 50)) {
-                    sprite.y = randomIntFromInterval(0, 500) - GAME_RESOLUTION.w;
-                    sprite.x = randomIntFromInterval(0, GAME_RESOLUTION.w);
+                if (sprite.y > (GAME_RESOLUTION.h + 23)) {
+                    sprite.y = -23;
+                }
+                if (GAME_STATE.delayControl % 50 === 0 && randomIntFromInterval(1, 4) === 2) {
+                    sprite.frame += 1;
+                    sprite.frame = sprite.frame === 2 ? 0 : sprite.frame;
                 }
                 continue;
             }
@@ -820,14 +822,14 @@
             if ((
                 sprite.id === GAME_SCENE_LVL_1_ENEMY_2 ||
                 sprite.id === GAME_SCENE_LVL_1_ENEMY_3
-            ) && airplaneSprite) {
+            ) && shipSprite) {
                 enemySprites.push(sprite);
                 sprite.y += sprite.forceY;
                 sprite.x += (sprite.forceX) * (() => {
-                    if (airplaneSprite.x === sprite.x) {
+                    if (shipSprite.x === sprite.x) {
                         return 0; // SAME LINE, STOP
                     }
-                    return (airplaneSprite.x > sprite.x ? -1 : 1); // PURSUIT THE PLAYER
+                    return (shipSprite.x > sprite.x ? -1 : 1); // PURSUIT THE PLAYER
                 })();
                 if (sprite.y > (GAME_RESOLUTION.h + 45)) {
                     removeSprite(sprite);
@@ -850,11 +852,11 @@
                 }
             }
 
-            if (sprite.id === GAME_SCENE_LVL_1_FIGHTER) {
-                airplaneSprite = sprite;
+            if (sprite.id === GAME_SCENE_LVL_1_SHIP) {
+                shipSprite = sprite;
 
-                if (airplaneSprite.missleReady) {
-                    airplaneSprite.missleReady -= 1;
+                if (shipSprite.missleReady) {
+                    shipSprite.missleReady -= 1;
                     missleReady.visible = false;
                 } else {
                     missleReady.visible = true;
@@ -862,18 +864,24 @@
 
                 // Gravity
                 if (GAME_STATE.delayControl % 5 === 0) {
+                    // Animation
+                    if (GAME_STATE.delayControl % 70 === 0) {
+                        sprite.frame += 1;
+                        sprite.frame = sprite.frame === 2 ? 0 : sprite.frame;
+                    }
+
                     // Gravity X
                     if (sprite.forceX > 0) {
-                        sprite.forceX -= 1;
+                        sprite.forceX -= 0.2;
                     } else if (sprite.forceX < 0) {
-                        sprite.forceX += 1;
+                        sprite.forceX += 0.2;
                     }
 
                     // Gravity Y
                     if (sprite.forceY > 0) {
-                        sprite.forceY -= 1;
+                        sprite.forceY -= 0.2;
                     } else if (sprite.forceY < 0) {
-                        sprite.forceY += 1;
+                        sprite.forceY += 0.2;
                     }
 
                     // Blinking
@@ -887,9 +895,11 @@
                 if (GAME_STATE.LEFT_BUTTON_PRESSED) {
                     sprite.forceX -= 2;
                     sprite.forceX = sprite.forceX < -5 ? -5 : sprite.forceX;
+                    sprite.inverted = false;
                 } else if (GAME_STATE.RIGHT_BUTTON_PRESSED) {
                     sprite.forceX += 2;
                     sprite.forceX = sprite.forceX > 5 ? 5 : sprite.forceX;
+                    sprite.inverted = true;
                 }
                 if (GAME_STATE.UP_BUTTON_PRESSED) {
                     sprite.forceY -= 2;
@@ -942,7 +952,7 @@
         // Collisions
         // BONUSES
         for (let bonus of bonuses) {
-            if (simpleCollisionBox(bonus, airplaneSprite)) {
+            if (simpleCollisionBox(bonus, shipSprite)) {
                 switch (bonus.id) {
                     case GAME_SCENE_LVL_1_LIFE_BONUS:
                         GAME_STATE.life += 1;
@@ -986,8 +996,8 @@
         }
 
         for (let enemy of enemySprites) {
-            if ((!airplaneSprite.isBlinking) && simpleCollisionBox(enemy, airplaneSprite)) {
-                airplaneSprite.isBlinking = 20;
+            if ((!shipSprite.isBlinking) && simpleCollisionBox(enemy, shipSprite)) {
+                shipSprite.isBlinking = 20;
                 // DAMAGE
                 continue;
             }
@@ -999,19 +1009,19 @@
                 enemy.x = randomIntFromInterval(0, 750);
                 continue;
             }
-            if (airplaneSprite.missleReady) {
+            if (shipSprite.missleReady) {
                 continue;
             }
-            const enemyLocked = airplaneSprite.x > enemy.x && 
-                                airplaneSprite.x < (enemy.x + enemy.res.w) &&
+            const enemyLocked = shipSprite.x > enemy.x && 
+                                shipSprite.x < (enemy.x + enemy.res.w) &&
                                 enemy.y > 30;
             if (enemyLocked && enemy.y > 100 && enemy.y < GAME_RESOLUTION.h) {
-                airplaneSprite.missleReady = 1000;
+                shipSprite.missleReady = 1000;
                 GAME_STATE.sprites.push({
                     id: GAME_SCENE_LVL_1_ALLY_MISSLE,
                     frames: [GAME_ASSETS.IMAGES.MISSLE.png],
-                    x: airplaneSprite.x + 12,
-                    y: airplaneSprite.y - 5,
+                    x: shipSprite.x + 12,
+                    y: shipSprite.y - 5,
                     res: { w: 12, h: 24 }
                 });
             }
