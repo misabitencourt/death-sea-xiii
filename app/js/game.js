@@ -496,7 +496,7 @@
                         y: 550,
                         forceX: 0,
                         forceY: 0,
-                        missleReady: 0,
+                        cannonReady: 0,
                         frame: 0,
                         scale: 1.2
                     }
@@ -652,7 +652,7 @@
     }
 
     function calcLvl1() {
-        let missleReady;
+        let cannonReady;
         const delayLvl5 = GAME_STATE.delayControl % 5 === 0;
 
         for (const text of GAME_STATE.texts) {
@@ -665,7 +665,7 @@
                 continue;
             }
             if (text.id === GAME_SCENE_LVL_1_CANNON_READY) {
-                missleReady = text;
+                cannonReady = text;
                 continue;
             }
         }
@@ -765,7 +765,7 @@
             }
         }
 
-        let shipSprite, enemySprites = [], bullets = [], allyMissle, bonuses = [];
+        let shipSprite, enemySprites = [], bullets = [], allyCannonBall, bonuses = [];
         for (const sprite of GAME_STATE.sprites) {
             if (sprite.id === GAME_SCENE_LVL_1_BACKGROUND) {
                 sprite.y += GAME_STATE.screenForce;
@@ -833,14 +833,14 @@
             }
 
             if (sprite.id === GAME_SCENE_LVL_1_ALLY_BALL) { // BALL SMOKE
-                allyMissle = sprite;
+                allyCannonBall = sprite;
                 GAME_STATE.sprites.push({
                     id: GAME_SCENE_LVL_1_SMOKE,
                     x: sprite.x + 8,
                     y: sprite.y + sprite.res.h + 2,
                     shape: SHAPE_SMOKE
                 });
-                sprite.y -= 5;
+                sprite.y -= 8;
                 if (sprite.y < -200) {
                     removeSprite(sprite);
                 }
@@ -849,11 +849,11 @@
             if (sprite.id === GAME_SCENE_LVL_1_SHIP) {
                 shipSprite = sprite;
 
-                if (shipSprite.missleReady) {
-                    shipSprite.missleReady -= 1;
-                    missleReady.visible = false;
+                if (shipSprite.cannonReady) {
+                    shipSprite.cannonReady -= 1;
+                    cannonReady.visible = false;
                 } else {
-                    missleReady.visible = true;
+                    cannonReady.visible = true;
                 }
 
                 // Gravity
@@ -995,22 +995,22 @@
                 // DAMAGE
                 continue;
             }
-            if (allyMissle && simpleCollisionBox(allyMissle, enemy)) {
+            if (allyCannonBall && simpleCollisionBox(allyCannonBall, enemy)) {
                 GAME_STATE.sprites.push(createExplostion(enemy.x, enemy.y));
-                removeSprite(allyMissle);
-                allyMissle = null;
+                removeSprite(allyCannonBall);
+                allyCannonBall = null;
                 enemy.y = GAME_RESOLUTION.h + 200;
                 enemy.x = randomIntFromInterval(0, 750);
                 continue;
             }
-            if (shipSprite.missleReady) {
+            if (shipSprite.cannonReady) {
                 continue;
             }
             const enemyLocked = shipSprite.x > enemy.x && 
                                 shipSprite.x < (enemy.x + enemy.res.w) &&
                                 enemy.y > 30;
             if (enemyLocked && enemy.y > 100 && enemy.y < GAME_RESOLUTION.h) {
-                shipSprite.missleReady = 1000;
+                shipSprite.cannonReady = 200;
                 GAME_STATE.sprites.push({
                     id: GAME_SCENE_LVL_1_ALLY_BALL,
                     frames: [GAME_ASSETS.IMAGES.CANNON_BALL.png],
