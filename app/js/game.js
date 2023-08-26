@@ -284,14 +284,8 @@
             if (!sprite['data']) {
                 sprite['data'] = uncompressImage(image.compressed);
             }
-            const tempCanvas = document.createElement('canvas');
-            tempCanvas.style.marginLeft = '-1000px';
-            tempCanvas.width = sprite.res.w;
-            tempCanvas.height = sprite.res.h;
-            const tempCtx = tempCanvas.getContext('2d');
-            let totalPixels = 0;
             const imageData = sprite['data'];
-            let y = 0, primaryColor, secondaryColor;
+            let primaryColor, secondaryColor;
             if (image.c1 && image.c2) {
                 primaryColor = image.c1;
                 secondaryColor = image.c2;
@@ -300,37 +294,29 @@
                 secondaryColor = '#000';
             }
             const draw = invert => {
+                const tempCanvas = document.createElement('canvas');
+                tempCanvas.width = sprite.res.w;
+                tempCanvas.height = sprite.res.h;
+                const tempCtx = tempCanvas.getContext('2d');
+                let totalPixels = 0, y = 0;
                 do {
                     for (let x = 0; x < sprite.res.w; x++) {
-                        const pixel = imageData[x + totalPixels];
+                        const pixel = invert ? imageData[((sprite.res.w-1) - x) + totalPixels] :
+                                               imageData[x + totalPixels];
                         if (pixel === 0) {
                             continue;
                         }
                         tempCtx.fillStyle = pixel === 1 ? primaryColor : secondaryColor;
-                        tempCtx.fillRect(0 + x, y, 1, 1);
+                        tempCtx.fillRect(x, y, 1, 1);
                     }
                     totalPixels += sprite.res.w;
                     y += 1;
                 } while (totalPixels < imageData.length);
-                tempCtx.fillStyle = '#000';
-                if (invert) {
-                    tempCtx.translate(tempCanvas.width / 2, tempCanvas.height / 2);
-                    tempCtx.scale(-1, 1);
-                }
                 const png = tempCanvas.toDataURL('image/png');
                 const pngImage = new Image();
                 pngImage.src = png;
-                sprite.png = pngImage;
-                if (invert) {
-                    tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
-                    tempCtx.translate(tempCanvas.width, 0);
-                    tempCtx.scale(-1, 1);
-                    tempCtx.drawImage(pngImage, 0, 0);
-                    const invertedImage = new Image();
-                    invertedImage.src = tempCanvas.toDataURL('image/png');
-                    sprite.invertedPng = invertedImage;
-                    document.body.appendChild(invertedImage);
-                }
+                invert && document.body.appendChild(pngImage);
+                sprite[invert ? 'invertedPng' : 'png'] = pngImage;
             };
             draw();
             if (sprite.generateInverted) {
