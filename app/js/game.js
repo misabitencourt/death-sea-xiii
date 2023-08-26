@@ -39,12 +39,16 @@
 
             SHIP_1: {
                 res: { w: 32, h: 32 },
+                c1: '#85867a',
+                c2: '#5c2e22',
                 generateInverted: true,
                 compressed: [-20,42,-7,37,160,-6,42,-7,32,-7,32,-7,32,-7,32,-6,1,164,-6,4,164,-6,22,36,-6,72,36,-5,1,24,36,-5,4,88,36,-5,16,88,36,-5,64,88,36,-4,1,-1,88,36,-4,4,-1,88,36,-4,16,-1,24,36,-4,64,-1,8,36,-2,32,26,64,-1,2,36,42,170,160,-1,168,-2,164,149,85,160,-1,38,170,160,38,85,85,160,-1,41,85,90,169,86,170,128,-1,2,170,165,85,90,170,-3,42,170,170,170,170,-3,42,170,170,170,168,-3,10,170,170,170,168,-3,2,170,170,170,160,-4,170,170,170,128,-9]
             },
 
             SHIP_2: {
                 res: { w: 32, h: 32 },
+                c1: '#85867a',
+                c2: '#5c2e22',
                 generateInverted: true,
                 compressed: [-20,42,-7,38,128,-6,42,-7,32,-7,32,-7,32,-7,32,-6,1,164,-6,4,164,-6,22,36,-6,72,36,-5,1,24,36,-5,4,24,36,-5,16,24,36,-5,64,24,36,-4,1,-1,24,36,-4,4,-1,24,36,-4,16,-1,24,36,-4,64,-1,8,36,-2,32,10,64,-1,2,36,42,170,170,2,168,-2,164,149,85,168,-1,166,170,160,38,85,85,160,-1,41,85,90,169,85,86,128,-1,10,165,85,85,86,170,-2,2,170,85,85,90,170,-3,170,170,170,170,168,-3,42,170,170,170,168,-3,2,170,170,170,160,-4,170,170,170,128,-9]
             },
@@ -108,9 +112,9 @@
                 compressed: [-3, 20, 4, -3, 16, 0, 1, 106, 90, 100, -3, 16, 170, 170, 90, 169, 64, 1, 16, 2, 170, 169, 10, 170, 164, 0, 0, 42, 170, 144, 5, 170, 169, 0, 0, 42, 164, 0, 0, 106, 170, 0, 0, 170, 160, 0, 0, 6, 170, 0, 17, 170, 64, -3, 106, 0, 1, 169, -4, 21, 0, 0, 80, -5, 80, 5, 64, 0, 1, 0, 0, 1, 160, 42, 144, 1, -3, 6, 168, 42, 144, -4, 6, 168, 42, 128, -4, 6, 168, 42, 128, -4, 2, 169, 170, 64, -4, 1, 169, 170, 128, 64, 0, 16, 0, 2, 168, 106, 64, -5, 164, 41, -6, 80, 4, -6, 0, 6, 64, -4, 18, 128, 10, 144, 0, 0, 4, 0, 10, 144, 10, 164, -4, 26, 160, 10, 169, -4, 42, 144, 6, 170, 64, -3, 42, 144, 6, 170, 144, -3, 42, 128, 1, 170, 161, 64, 0, 42, 70, 64, 0, 106, 138, 170, 128, 106, 64, 0, 0, 5, 74, 170, 168, 170, 128, -3, 6, 170, 168, 106, 64, -3, 1, 106, 164, 21, 0, 4, 4, 0, 0, 4, -4]
             },
 
-            MISSLE: {
-                res: { w: 12, h: 24 },
-                compressed: [-4, 8, 0, 0, 8, 0, 0, 38, 0, 0, 38, 0, 0, 38, 0, 0, 38, 0, 0, 166, 128, 10, 106, 104, 9, 106, 88, 2, 170, 160, 0, 38, 0, 0, 38, 0, 0, 38, 0, 0, 38, 0, 0, 38, 0, 0, 38, 0, 0, 38, 0, 0, 38, 0, 0, 149, 128, 2, 85, 96, 10, 170, 168, 0, 170, 128, -3]
+            CANNON_BALL: {
+                res: { w: 16, h: 16 },
+                compressed: [0,8,-3,32,-3,128,-2,2,-7,32,-43]
             },
 
             ENEMY_2: {
@@ -199,14 +203,13 @@
     const GAME_SCENE_LVL_1_LIFE = 6;
     const GAME_SCENE_LVL_1_SCORE_TEXT = 7;
     const GAME_SCENE_LVL_1_EXPLOSION = 8;
-    const GAME_SCENE_LVL_1_ALLY_MISSLE = 9;
-    const GAME_SCENE_LVL_1_MISSLE_READY = 10;
+    const GAME_SCENE_LVL_1_ALLY_BALL = 9;
+    const GAME_SCENE_LVL_1_CANNON_READY = 10;
     const GAME_SCENE_LVL_1_SMOKE = 11;
     const GAME_SCENE_LVL_1_ENEMY_2 = 12;
     const GAME_SCENE_LVL_1_ENEMY_3 = 13;
-    const GAME_SCENE_LVL_1_ENEMY_MISSLE = 15;
-    const GAME_SCENE_LVL_1_BULLET_BONUS = 16;
-    const GAME_SCENE_LVL_1_LIFE_BONUS = 17;
+    const GAME_SCENE_LVL_1_BULLET_BONUS = 14;
+    const GAME_SCENE_LVL_1_LIFE_BONUS = 15;
 
      const GAME_SCENE_INTERLUDE = 3;
 
@@ -285,14 +288,8 @@
                 sprite['data'] = uncompressImage(image.compressed);
             }
             const imageData = sprite['data'];
-            let primaryColor, secondaryColor;
-            if (image.c1 && image.c2) {
-                primaryColor = image.c1;
-                secondaryColor = image.c2;
-            } else {
-                primaryColor = '#999';
-                secondaryColor = '#000';
-            }
+            const primaryColor = image.c1 || '#999';
+            const secondaryColor = image.c2 || '#000';
             const draw = invert => {
                 const tempCanvas = document.createElement('canvas');
                 tempCanvas.width = sprite.res.w;
@@ -500,7 +497,8 @@
                         forceX: 0,
                         forceY: 0,
                         missleReady: 0,
-                        frame: 0
+                        frame: 0,
+                        scale: 1.2
                     }
                 ];
                 GAME_STATE.texts = [
@@ -512,8 +510,8 @@
                         x: GAME_RESOLUTION.w - 150
                     },
                     {
-                        id: GAME_SCENE_LVL_1_MISSLE_READY,
-                        text: 'MISSLE READY!',
+                        id: GAME_SCENE_LVL_1_CANNON_READY,
+                        text: 'CANNONS READY!',
                         y: 20,
                         x: (GAME_RESOLUTION.w / 2) - 50,
                         visible: false
@@ -655,6 +653,8 @@
 
     function calcLvl1() {
         let missleReady;
+        const delayLvl5 = GAME_STATE.delayControl % 5 === 0;
+
         for (const text of GAME_STATE.texts) {
             if (text.isBlinking) {
                 text.isBlinking -= 1;
@@ -664,7 +664,7 @@
                 text.text = text.prefix + GAME_STATE.score;
                 continue;
             }
-            if (text.id === GAME_SCENE_LVL_1_MISSLE_READY) {
+            if (text.id === GAME_SCENE_LVL_1_CANNON_READY) {
                 missleReady = text;
                 continue;
             }
@@ -699,7 +699,8 @@
                     frames: [GAME_ASSETS.IMAGES.LIFE_BONUS.png],
                     res: { w: 24, h: 13 },
                     x: randomIntFromInterval(10, 750),
-                    y: randomIntFromInterval(-100, -400)
+                    y: randomIntFromInterval(-100, -400),
+                    scale: 1
                 });
             }
 
@@ -709,7 +710,8 @@
                     frames: [GAME_ASSETS.IMAGES.BULLET_BONUS.png],
                     res: { w: 24, h: 13 },
                     x: randomIntFromInterval(10, 750),
-                    y: randomIntFromInterval(-100, -400)
+                    y: randomIntFromInterval(-100, -400),
+                    scale: 1
                 });
             }
 
@@ -721,8 +723,8 @@
                     res: { w: 32, h: 32 },
                     x: randomIntFromInterval(10, 750),
                     y: randomIntFromInterval(-40, -120),
-                    forceX: randomIntFromInterval(1, 3),
-                    forceY: randomIntFromInterval(1, 2),
+                    forceX: randomIntFromInterval(-3, 3),
+                    forceY: randomIntFromInterval(1, 3) || 1,
                     awaiting: randomIntFromInterval(0, 200),
                     frame: 0
                 });
@@ -738,8 +740,8 @@
                     res: { w: 32, h: 32 },
                     x: randomIntFromInterval(10, 750),
                     y: randomIntFromInterval(-40, -120),
-                    forceX: randomIntFromInterval(1, 4),
-                    forceY: randomIntFromInterval(1, 2),
+                    forceX: randomIntFromInterval(-2, 4),
+                    forceY: randomIntFromInterval(1, 3) || 1,
                     awaiting: randomIntFromInterval(0, 200),
                     life: 2
                 });
@@ -755,7 +757,7 @@
                     res: { w: 32, h: 32 },
                     x: randomIntFromInterval(10, 750),
                     y: randomIntFromInterval(-40, -120),
-                    forceX: randomIntFromInterval(1, 4),
+                    forceX: randomIntFromInterval(-4, 4),
                     forceY: randomIntFromInterval(1, 4),
                     awaiting: randomIntFromInterval(0, 200),
                     life: 4
@@ -770,7 +772,7 @@
                 if (sprite.y > (GAME_RESOLUTION.h + 23)) {
                     sprite.y = -23;
                 }
-                if (GAME_STATE.delayControl % 50 === 0 && randomIntFromInterval(1, 4) === 2) {
+                if (GAME_STATE.delayControl % 25 === 0) {
                     sprite.frame += 1;
                     sprite.frame = sprite.frame === 2 ? 0 : sprite.frame;
                 }
@@ -781,6 +783,12 @@
                 sprite.id === GAME_SCENE_LVL_1_LIFE_BONUS) {
                 sprite.y += 1;
                 bonuses.push(sprite);
+                // transform animation
+                if (delayLvl5) {
+                    sprite.pulsing = (sprite.pulsing || 1) + 1;
+                    sprite.pulsing = (sprite.pulsing === 20) ? 0 : sprite.pulsing;
+                    sprite.scale += ((sprite.pulsing > 10) ? -1 : 1) * 0.02;
+                }
                 continue;
             }
 
@@ -788,7 +796,7 @@
                 enemySprites.push(sprite);
                 sprite.y += sprite.forceY;
                 sprite.x += sprite.forceX;
-                if (GAME_STATE.delayControl % 5 === 0) {
+                if (delayLvl5) {
                     sprite.frame += 1;
                     sprite.frame = (sprite.frame === sprite.frames.length) ? 0 : sprite.frame;
                 }
@@ -824,7 +832,7 @@
                 continue;
             }
 
-            if (sprite.id === GAME_SCENE_LVL_1_ALLY_MISSLE) { // MISSLE SMOKE
+            if (sprite.id === GAME_SCENE_LVL_1_ALLY_BALL) { // BALL SMOKE
                 allyMissle = sprite;
                 GAME_STATE.sprites.push({
                     id: GAME_SCENE_LVL_1_SMOKE,
@@ -832,7 +840,7 @@
                     y: sprite.y + sprite.res.h + 2,
                     shape: SHAPE_SMOKE
                 });
-                sprite.y -= 10;
+                sprite.y -= 5;
                 if (sprite.y < -200) {
                     removeSprite(sprite);
                 }
@@ -849,7 +857,7 @@
                 }
 
                 // Gravity
-                if (GAME_STATE.delayControl % 5 === 0) {
+                if (delayLvl5) {
                     // Animation
                     if (GAME_STATE.delayControl % 70 === 0) {
                         sprite.frame += 1;
@@ -858,16 +866,16 @@
 
                     // Gravity X
                     if (sprite.forceX > 0) {
-                        sprite.forceX -= 0.2;
+                        sprite.forceX -= 0.1;
                     } else if (sprite.forceX < 0) {
-                        sprite.forceX += 0.2;
+                        sprite.forceX += 0.1;
                     }
 
                     // Gravity Y
                     if (sprite.forceY > 0) {
-                        sprite.forceY -= 0.2;
+                        sprite.forceY -= 0.1;
                     } else if (sprite.forceY < 0) {
-                        sprite.forceY += 0.2;
+                        sprite.forceY += 0.1;
                     }
 
                     // Blinking
@@ -880,19 +888,19 @@
                 // controls
                 if (GAME_STATE.LEFT_BUTTON_PRESSED) {
                     sprite.forceX -= 2;
-                    sprite.forceX = sprite.forceX < -5 ? -5 : sprite.forceX;
+                    sprite.forceX = sprite.forceX < -4 ? -4 : sprite.forceX;
                     sprite.inverted = false;
                 } else if (GAME_STATE.RIGHT_BUTTON_PRESSED) {
                     sprite.forceX += 2;
-                    sprite.forceX = sprite.forceX > 5 ? 5 : sprite.forceX;
+                    sprite.forceX = sprite.forceX > 4 ? 4 : sprite.forceX;
                     sprite.inverted = true;
                 }
                 if (GAME_STATE.UP_BUTTON_PRESSED) {
-                    sprite.forceY -= 2;
-                    sprite.forceY = sprite.forceY < -3 ? -3 : sprite.forceY;
+                    sprite.forceY -= 1;
+                    sprite.forceY = sprite.forceY < -2 ? -2 : sprite.forceY;
                 } else if (GAME_STATE.DOWN_BUTTON_PRESSED) {
-                    sprite.forceY += 2;
-                    sprite.forceY = sprite.forceY > 3 ? 3 : sprite.forceY;
+                    sprite.forceY += 1;
+                    sprite.forceY = sprite.forceY > 2 ? 2 : sprite.forceY;
                 }
 
                 // Force apply
@@ -1004,11 +1012,11 @@
             if (enemyLocked && enemy.y > 100 && enemy.y < GAME_RESOLUTION.h) {
                 shipSprite.missleReady = 1000;
                 GAME_STATE.sprites.push({
-                    id: GAME_SCENE_LVL_1_ALLY_MISSLE,
-                    frames: [GAME_ASSETS.IMAGES.MISSLE.png],
+                    id: GAME_SCENE_LVL_1_ALLY_BALL,
+                    frames: [GAME_ASSETS.IMAGES.CANNON_BALL.png],
                     x: shipSprite.x + 12,
                     y: shipSprite.y - 5,
-                    res: { w: 12, h: 24 }
+                    res: { w: 16, h: 16 }
                 });
             }
         }
