@@ -223,23 +223,6 @@
 
      const GAME_SCENE_INTERLUDE = 3;
 
-    // const audioContext = new AudioContext();
-    // const audioContextOscillator = audioContext.createOscillator();
-    // audioContextOscillator.frequency.setTargetAtTime(0, context.currentTime, 0);
-    // audioContextOscillator.connect(context.destination);
-    // audioContextOscillator.start(0);
-    // const audioBufferTimeouts = [];
-    // function playSound(audio) {
-    //     let time = 0;
-    //     for (const part of audio) {
-    //         const audioBuffTimeout = setTimeout(() => {
-    //             audioContextOscillator.frequency.setTargetAtTime(part.ton, context.currentTime, 0);
-    //         }, time);
-    //         time += part.duration;
-    //         audioBufferTimeouts.push(audioBuffTimeout);
-    //     }
-    // }
-
     function removeSprite(sprite) {
         GAME_STATE.sprites.splice(GAME_STATE.sprites.indexOf(sprite), 1);
     }
