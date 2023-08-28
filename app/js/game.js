@@ -59,6 +59,8 @@
             },
 
             HEART: {
+                c1: '#FE3333',
+                c2: '#000',
                 res: { w: 18, h: 18 },
                 compressed: [2, 168, 2, 168, 0, 170, 128, 42, 128, 41, 86, 9, 90, 10, 85, 90, 85, 106, 165, 85, 165, 85, 170, 85, 85, 85, 90, 165, 85, 85, 85, 170, 85, 85, 85, 90, 165, 85, 85, 85, 162, 149, 85, 85, 104, 10, 85, 85, 90, 0, 41, 85, 86, 128, 0, 165, 85, 160, 0, 2, 149, 104, 0, 0, 10, 90, 0, 0, 0, 42, 128, 0, 0, 0, 160, 0, 0, 0, 10, 0, 0]
             },
@@ -396,7 +398,6 @@
                         scale: 1.5
                     }
                 ];
-                GAME_STATE.tilesets = [];
                 GAME_STATE.texts = [
                     {
                         id: GAME_SCENE_TITLE_SCREEN_TEXT,
@@ -475,7 +476,6 @@
                 GAME_STATE.scene = GAME_SCENE_LVL_1;
                 GAME_STATE.PLAYER_LIMIT_X = (GAME_RESOLUTION.w - GAME_ASSETS.IMAGES.SHIP_1.res.w);
                 GAME_STATE.PLAYER_LIMIT_Y = (GAME_RESOLUTION.h - GAME_ASSETS.IMAGES.SHIP_1.res.h);
-                GAME_STATE.tilesets = [];
                 GAME_STATE.score = 0;
                 GAME_STATE.enemiesCount = 0;
                 GAME_STATE.timecontrol = 0;
