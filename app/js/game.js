@@ -135,6 +135,11 @@
                 compressed: [0,8,-3,32,-3,128,-2,2,-7,32,-43]
             },
 
+            LETTER_PEN: {
+                res: { w: 40, h: 40 },
+                compressed: [1,85,85,85,85,85,64,-3,25,105,85,85,85,85,100,-3,32,10,-4,9,-3,128,2,-4,2,-3,170,170,130,170,170,170,144,128,-4,128,-4,128,-4,32,170,170,170,164,32,-1,160,-2,32,-4,32,10,96,-2,32,-4,32,37,96,-2,40,106,170,170,168,34,149,96,-2,8,-4,41,89,80,-2,8,170,170,170,168,41,101,144,-2,8,-4,85,102,64,-2,8,-3,2,85,149,144,-2,8,21,85,85,86,86,85,128,-2,8,-3,6,86,86,-3,8,42,170,170,170,89,88,-3,8,-3,37,89,100,-3,8,-3,37,101,164,-3,8,42,170,170,165,101,100,-3,8,-3,9,149,96,-3,8,42,170,170,169,149,128,-3,8,-3,37,150,-4,8,1,85,85,102,89,-4,8,21,85,85,90,89,-4,8,-3,2,104,-4,8,10,170,170,170,136,-4,10,-3,2,8,-4,2,-3,2,136,-4,2,2,170,170,170,2,-4,2,-4,2,-4,2,-1,85,85,85,82,-4,2,128,-1,170,170,170,170,168,-3,128,-1,8,-3,2,-3,32,-1,2,-3,1,-3,36,-1,2,-3,1,-3,8,-1,2,-3,1,-3,2,64,8,-3,2,-4,170,165,85,85,85,88,-4,21,64,-4]
+            },
+
             ENEMY_2: {
                 res: { w: 32, h: 32 },
                 c1: '#5b4e9d',
@@ -451,37 +456,59 @@
                 GAME_STATE.scene = GAME_SCENE_INTERLUDE;
                 GAME_STATE.sprites = [
                     {
-                        id: GAME_SCENE_TITLE_DRAGON_SPRITE,
                         frames: [GAME_ASSETS.IMAGES.SHIP_1.png],
                         res: { w: 32, h: 32 },
                         x: 350,
-                        y: 100,
+                        y: 50,
                         scale: 2.3
+                    },
+                    {
+                        frames: [GAME_ASSETS.IMAGES.LETTER_PEN.png],
+                        res: { w: 40, h: 40 },
+                        x: 20,
+                        y: GAME_RESOLUTION.h - 70,
+                        scale: 1.5
                     }
                 ];
                 GAME_STATE.texts = [
                     {
-                        text: 'THIS IS A SECRET MISSION!!',
+                        text: 'Your Majesty,',
                         font: '34px ' + FONT_NAME,
                         x: 20,
+                        y: 200,
+                    },
+                    {
+                        text: 'I pen this message knowing it may be my last.',
+                        x: 20,
                         y: 240,
-                    },
-                    {
-                        text: 'Your plane will travel through time! TO THE XIII Century.',
-                        x: 20,
-                        y: 280,
                         font: '21px ' + FONT_NAME
                     },
                     {
-                        text: 'The objective is simple:',
+                        text: 'I can confirm, Your Majesty, that the',
                         x: 20,
-                        y: 360,
+                        y: 290,
                         font: '21px ' + FONT_NAME
                     },
                     {
-                        text: 'DEFEAT THE DRAGON HORDE AND SAVE OUR FUTURE!',
+                        text: 'ancient tales of sea monsters are true!',
                         x: 20,
-                        y: 400
+                        y: 310
+                    },
+                    {
+                        text: 'As we prepare to face them in battle, I wish to convey',
+                        x: 20,
+                        y: 360
+                    },
+                    {
+                        text: 'the honor it has been to serve our house.',
+                        x: 20,
+                        y: 380
+                    },
+                    {
+                        text: 'Captain Cedric Leviathanhunter, 13th March 1326.',
+                        x: 20,
+                        y: 460,
+                        font: '18px '+ FONT_NAME
                     },
                     {
                         text: 'Press ↵ to continue',
