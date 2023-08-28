@@ -559,8 +559,8 @@
                     }
                 ];
                 GAME_STATE.screenForce = 1;
-                for (let coverX=-100; coverX<(GAME_RESOLUTION.w); coverX += 24) {
-                    for (let coverY=0; coverY<(GAME_RESOLUTION.h * 1.8); coverY += 24) {
+                for (let coverX=0; coverX<(GAME_RESOLUTION.w); coverX += 24) {
+                    for (let coverY=-50; coverY<(GAME_RESOLUTION.h * 1.8); coverY += 24) {
                         GAME_STATE.sprites.unshift({
                             id: GAME_SCENE_LVL_1_BACKGROUND,
                             frames: [GAME_ASSETS.IMAGES.WATER_1.png, GAME_ASSETS.IMAGES.WATER_2.png],
@@ -588,7 +588,7 @@
 
         // Drawing sprites
         for (const sprite of GAME_STATE.sprites) {
-            if (sprite.x < -20 || sprite.y < -20 || sprite.x > GAME_RESOLUTION.w || sprite.y > GAME_RESOLUTION.h) {
+            if (sprite.x < -50 || sprite.y < -50 || sprite.x > GAME_RESOLUTION.w || sprite.y > GAME_RESOLUTION.h) {
                 continue;
             }
             if (sprite.visible === false) {
@@ -817,8 +817,8 @@
         for (const sprite of GAME_STATE.sprites) {
             if (sprite.id === GAME_SCENE_LVL_1_BACKGROUND) {
                 sprite.y += GAME_STATE.screenForce;
-                if (sprite.y > (GAME_RESOLUTION.h + 23)) {
-                    sprite.y = -23;
+                if (sprite.y > GAME_RESOLUTION.h) {
+                    sprite.y = -24;
                 }
                 if (GAME_STATE.delayControl % 25 === 0) {
                     sprite.frame += 1;
