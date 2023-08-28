@@ -534,6 +534,7 @@
 
             case GAME_SCENE_LVL_1:
                 GAME_STATE.scene = GAME_SCENE_LVL_1;
+                GAME_STATE.life = 5;
                 GAME_STATE.PLAYER_LIMIT_X = (GAME_RESOLUTION.w - GAME_ASSETS.IMAGES.SHIP_1.res.w);
                 GAME_STATE.PLAYER_LIMIT_Y = (GAME_RESOLUTION.h - GAME_ASSETS.IMAGES.SHIP_1.res.h);
                 GAME_STATE.score = 0;
@@ -587,6 +588,7 @@
                 for (let i = 0; i < GAME_FIGHTER_LIFES; i++) {
                     GAME_STATE.sprites.push({
                         id: GAME_SCENE_LVL_1_LIFE,
+                        life: i+1,
                         frames: [GAME_ASSETS.IMAGES.HEART.png],
                         res: { w: 18, h: 18 },
                         x: 5 + (18 * i) + (5 * i),
@@ -1006,6 +1008,11 @@
                 if (sprite.frame > 3) {
                     removeSprite(sprite);
                 }
+                continue;
+            }
+
+            if (sprite.id === GAME_SCENE_LVL_1_LIFE) {
+                sprite.visible = !(sprite.life > GAME_STATE.life);
             }
         }
 
@@ -1058,7 +1065,7 @@
         for (let enemy of enemySprites) {
             if ((!shipSprite.isBlinking) && simpleCollisionBox(enemy, shipSprite)) {
                 shipSprite.isBlinking = 20;
-                // DAMAGE
+                GAME_STATE.life -= 1;
                 continue;
             }
             if (allyCannonBall && simpleCollisionBox(allyCannonBall, enemy)) {
