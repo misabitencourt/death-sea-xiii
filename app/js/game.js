@@ -223,6 +223,7 @@
     const GAME_RESOLUTION = { w: 800, h: 600 };
     const FONT_NAME = 'monospace';
     const GAME_STORAGE_PREFIX = '__DEATH_SEA_XIII_storage_';
+    const STORAGE_KEY = GAME_STORAGE_PREFIX + '_scores';
 
     const SHAPE_SMOKE = 1;
     const SHAPE_SQUARE_GRADIENT = 2;
@@ -279,7 +280,6 @@
     }
 
     function scoreRegister(score) {
-        const storageKey = GAME_STORAGE_PREFIX + '_scores';
         const highScoreList = getScoreList();
         const highestScores = highScoreList.filter(record => record.score > highScoreList);
         if (highestScores.length > 5) {
@@ -291,11 +291,11 @@
         }
         highScoreList.push({ playerName, score, scoreAt: new Date() });
         highScoreList.sort((a, b) => b.score - a.score);
-        localStorage.setItem(storageKey, JSON.stringify(highScoreList));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(highScoreList));
     }
 
     function getScoreList() {
-        return JSON.parse(localStorage.getItem(storageKey) || '[]');
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
     }
 
     function uncompressImage(compressed) {
