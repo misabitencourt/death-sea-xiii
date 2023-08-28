@@ -222,6 +222,7 @@
     const GAME_STATE = {};
     const GAME_RESOLUTION = { w: 800, h: 600 };
     const FONT_NAME = 'monospace';
+    const GAME_STORAGE_PREFIX = '__DEATH_SEA_XIII_storage_';
 
     const SHAPE_SMOKE = 1;
     const SHAPE_SQUARE_GRADIENT = 2;
@@ -250,8 +251,11 @@
     const GAME_SCENE_LVL_1_ENEMY_3 = 13;
     const GAME_SCENE_LVL_1_BULLET_BONUS = 14;
     const GAME_SCENE_LVL_1_LIFE_BONUS = 15;
+    const GAME_SCENE_LVL_1_GAME_OVER = 16;
 
-     const GAME_SCENE_INTERLUDE = 3;
+    const GAME_SCENE_INTERLUDE = 3;
+    const GAME_SCENE_HIGH_SCORES = 4;
+
 
     function removeSprite(sprite) {
         GAME_STATE.sprites.splice(GAME_STATE.sprites.indexOf(sprite), 1);
@@ -272,6 +276,26 @@
                 (obj2.y < obj1YEnd) && (obj2YEnd > obj1YEnd)
             )
         );
+    }
+
+    function scoreRegister(score) {
+        const storageKey = GAME_STORAGE_PREFIX + '_scores';
+        const highScoreList = getScoreList();
+        const highestScores = highScoreList.filter(record => record.score > highScoreList);
+        if (highestScores.length > 5) {
+            return;
+        }
+        const playerName = prompt('New Record! Please, enter your name');
+        if (!playerName) {
+            return;
+        }
+        highScoreList.push({ playerName, score, scoreAt: new Date() });
+        highScoreList.sort((a, b) => b.score - a.score);
+        localStorage.setItem(storageKey, JSON.stringify(highScoreList));
+    }
+
+    function getScoreList() {
+        return JSON.parse(localStorage.getItem(storageKey) || '[]');
     }
 
     function uncompressImage(compressed) {
@@ -303,7 +327,7 @@
         }, []);
     }
 
-    function uncompressImages() {
+    function generateImagesPng() {
         Object.keys(GAME_ASSETS.IMAGES).forEach(imageName => {
             const sprite = GAME_ASSETS.IMAGES[imageName];
             const image = sprite;
@@ -569,6 +593,13 @@
                         y: 20,
                         x: (GAME_RESOLUTION.w / 2) - 50,
                         visible: false
+                    },
+                    {
+                        id: GAME_SCENE_LVL_1_GAME_OVER,
+                        text: 'GAME OVER',
+                        y: 260,
+                        x: (GAME_RESOLUTION.w / 2) - 30,
+                        visible: false
                     }
                 ];
                 GAME_STATE.screenForce = 1;
@@ -595,6 +626,26 @@
                         y: 5
                     });
                 }
+                break;
+            
+            case GAME_SCENE_HIGH_SCORES:
+                GAME_STATE.scene = GAME_SCENE_HIGH_SCORES;
+                GAME_STATE.texts = [
+                    {
+                        text: 'High Scores',
+                        x: (GAME_RESOLUTION.w / 2) - 100,
+                        y: 60,
+                        font: '34px '+FONT_NAME 
+                    },
+                    {
+                        text: 'Press ↵ to back',
+                        x: GAME_RESOLUTION.w - 140,
+                        y: GAME_RESOLUTION.h - 20,
+                        font: '12px ' + FONT_NAME
+                    }
+                ];
+                GAME_STATE.sprites = [];
+                break;
         }
     }
 
@@ -670,6 +721,11 @@
                 GAME_SCENE_TITLE_START_GAME_TEXT : GAME_SCENE_TITLE_HIGH_SCORE_TEXT;
         }
 
+        if (GAME_STATE.OK_BUTTON_RELEASED) {
+            createScene(GAME_STATE.selectedMenu === GAME_SCENE_TITLE_HIGH_SCORE_TEXT ? 
+                            GAME_SCENE_HIGH_SCORES : GAME_SCENE_INTERLUDE);
+        }
+
         for (const sprite of GAME_STATE.sprites) {
             if (sprite.id === GAME_SCENE_TITLE_ARROW_SPRITE) {
                 sprite.y = (GAME_STATE.selectedMenu === GAME_SCENE_TITLE_START_GAME_TEXT) ? 280 : 310;
@@ -694,9 +750,6 @@
             if (text.id === GAME_SCENE_TITLE_START_GAME_TEXT) {
                 const selected = GAME_STATE.selectedMenu === GAME_SCENE_TITLE_START_GAME_TEXT;
                 text.font = selected ? '900 24px Ubuntu' : '21px Ubuntu';
-                if (GAME_STATE.OK_BUTTON_RELEASED) {
-                    createScene(GAME_SCENE_INTERLUDE);
-                }
                 continue;
             }
             if (text.id === GAME_SCENE_TITLE_HIGH_SCORE_TEXT) {
@@ -714,8 +767,15 @@
     }
 
     function calcLvl1() {
-        let cannonReady;
+        let cannonReady, gameOver;
+        gameOver = GAME_STATE.gameOver;
         const delayLvl5 = GAME_STATE.delayControl % 5 === 0;
+
+        if (GAME_STATE.gameOver === 0) {
+            scoreRegister(+GAME_STATE.score);
+            createScene(GAME_SCENE_TITLE_SCREEN);
+            return;
+        }
 
         for (const text of GAME_STATE.texts) {
             if (text.isBlinking) {
@@ -728,6 +788,10 @@
             }
             if (text.id === GAME_SCENE_LVL_1_CANNON_READY) {
                 cannonReady = text;
+                continue;
+            }
+            if (text.id === GAME_SCENE_LVL_1_GAME_OVER) {
+                text.visible = !!GAME_STATE.gameOver;
                 continue;
             }
         }
@@ -917,6 +981,11 @@
             if (sprite.id === GAME_SCENE_LVL_1_SHIP) {
                 shipSprite = sprite;
 
+                if (gameOver) {
+                    sprite.visible = false;
+                    continue;
+                }
+
                 if (shipSprite.cannonReady) {
                     shipSprite.cannonReady -= 1;
                     cannonReady.visible = false;
@@ -1016,6 +1085,13 @@
             }
         }
 
+        // Game Over condition
+        if (GAME_STATE.gameOver) {
+            GAME_STATE.gameOver -= 1; // Message timing
+        } else if (GAME_STATE.life < 1) {
+            GAME_STATE.gameOver = 240;
+        }
+
         // Collisions
         // BONUSES
         for (let bonus of bonuses) {
@@ -1095,6 +1171,12 @@
         }
     }
 
+    function calcHighScores() {
+        if (GAME_STATE.OK_BUTTON_RELEASED) {
+            createScene(GAME_SCENE_TITLE_SCREEN);
+        }
+    }
+
     function calc() {
         switch (GAME_STATE.scene) {
             case GAME_SCENE_TITLE_SCREEN:
@@ -1108,11 +1190,15 @@
             case GAME_SCENE_LVL_1:
                 calcLvl1();
                 break;
+
+            case GAME_SCENE_HIGH_SCORES:
+                calcHighScores();
+                break;
         }
     }
 
     function init() {
-        uncompressImages();
+        generateImagesPng();
         document.body.style = 'margin: 0; padding: 0; background-color: #000';
         const canvas = document.createElement('canvas');
         canvas.style.backgroundColor = '#FFF';
