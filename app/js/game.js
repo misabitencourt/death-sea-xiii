@@ -557,6 +557,7 @@
 
 
             case GAME_SCENE_LVL_1:
+                GAME_STATE.gameOver = undefined;
                 GAME_STATE.scene = GAME_SCENE_LVL_1;
                 GAME_STATE.life = 5;
                 GAME_STATE.PLAYER_LIMIT_X = (GAME_RESOLUTION.w - GAME_ASSETS.IMAGES.SHIP_1.res.w);
@@ -633,7 +634,7 @@
                 GAME_STATE.texts = [
                     {
                         text: 'High Scores',
-                        x: (GAME_RESOLUTION.w / 2) - 100,
+                        x: (GAME_RESOLUTION.w / 2) - 120,
                         y: 60,
                         font: '34px '+FONT_NAME 
                     },
@@ -644,7 +645,34 @@
                         font: '12px ' + FONT_NAME
                     }
                 ];
-                GAME_STATE.sprites = [];
+                const highScores = getScoreList();
+                if (!highScores.length) {
+                    GAME_STATE.texts.shift({
+                        text: `No one score have been registered yet.`,
+                        x: 50,
+                        y: 260,
+                        font: '21px '+FONT_NAME
+                    })
+                } else {
+                    const namePadding = name => (name.length < 30) ? `${name}${' '.repeat(30 - name.length)}` :
+                                                                    name.substring(0, 30);
+
+                    highScores.forEach((highScore, index) => GAME_STATE.texts.unshift({
+                        text: `${index+1} - ${namePadding(highScore.playerName)} ${highScore.score} points`,
+                        x: 100,
+                        y: 260 + ((index)*25),
+                        font: '21px '+FONT_NAME
+                    }));
+                }
+                GAME_STATE.sprites = [
+                    {
+                        frames: [GAME_ASSETS.IMAGES.LETTER_PEN.png],
+                        x: (GAME_RESOLUTION.w / 2) - 50,
+                        y: 100,
+                        res: { w: 40, h: 40 },
+                        scale: 1.7
+                    }
+                ];
                 break;
         }
     }
