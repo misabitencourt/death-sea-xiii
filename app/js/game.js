@@ -328,6 +328,22 @@
     }
 
     function generateImagesPng() {
+        // Shadow generate
+        (() => {
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = 20;
+            tempCanvas.height = 20;
+            const viewportContext = tempCanvas.getContext('2d');
+            viewportContext.fillStyle = 'rgba(0, 0, 0, 0.15)';
+            viewportContext.beginPath();
+            viewportContext.arc(10, 10, 10, 0, 2*Math.PI);
+            viewportContext.fill();
+            const png = tempCanvas.toDataURL('image/png');
+            const pngImage = new Image();
+            pngImage.src = png;
+            GAME_ASSETS.shadowPng = pngImage;
+        })();
+
         Object.keys(GAME_ASSETS.IMAGES).forEach(imageName => {
             const sprite = GAME_ASSETS.IMAGES[imageName];
             const image = sprite;
@@ -359,7 +375,6 @@
                 const png = tempCanvas.toDataURL('image/png');
                 const pngImage = new Image();
                 pngImage.src = png;
-                invert && document.body.appendChild(pngImage);
                 sprite[invert ? 'invertedPng' : 'png'] = pngImage;
             };
             draw();
@@ -577,7 +592,8 @@
                         forceY: 0,
                         cannonReady: 0,
                         frame: 0,
-                        scale: 1.2
+                        scale: 1.2,
+                        shadow: { color: '#349794' }
                     }
                 ];
                 GAME_STATE.texts = [
@@ -716,6 +732,10 @@
                         break;
                 }
                 continue;
+            }
+            if (sprite.shadow) {
+                const spriteYEnd = sprite.y + sprite.res.h + (sprite.shadow.distance || 0);
+                viewportContext.drawImage(GAME_ASSETS.shadowPng, 0, 0, 20, 20, sprite.x + 5, spriteYEnd, sprite.res.w, sprite.res.h/4);
             }
             const image = sprite.inverted ? sprite.invertedFrames[sprite.frame || 0] : sprite.frames[sprite.frame || 0];
             if (sprite.scale) {
