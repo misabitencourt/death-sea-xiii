@@ -24,6 +24,66 @@
      * The images are compressed in Javascript arrays. To comprehend thease are created, see TODO
      * 
      */
+    const createSound = type => ({
+        songData: [
+          { // Instrument 0
+            i: [
+            1, // OSC1_WAVEFORM
+            192, // OSC1_VOL
+            128, // OSC1_SEMI
+            0, // OSC1_XENV
+            1, // OSC2_WAVEFORM
+            191, // OSC2_VOL
+            116, // OSC2_SEMI
+            9, // OSC2_DETUNE
+            0, // OSC2_XENV
+            0, // NOISE_VOL
+            6, // ENV_ATTACK
+            22, // ENV_SUSTAIN
+            34, // ENV_RELEASE
+            0, // ENV_EXP_DECAY
+            0, // ARP_CHORD
+            type === 'song-intro' ? 0 : 25, // ARP_SPEED
+            0, // LFO_WAVEFORM
+            69, // LFO_AMT
+            type === 'song-intro' ? 3 : 90, // LFO_FREQ
+            1, // LFO_FX_FREQ
+            1, // FX_FILTER
+            23, // FX_FREQ
+            167, // FX_RESONANCE
+            0, // FX_DIST
+            32, // FX_DRIVE
+            77, // FX_PAN_AMT
+            type === 'song-intro' ? 2 : 90, // FX_PAN_FREQ
+            type === 'song-intro' ? 25 : 3, // FX_DELAY_AMT
+            type === 'song-intro' ? 1 : 2 // FX_DELAY_TIME
+            ],
+            // Patterns
+            p: [1],
+            // Columns
+            c: [
+              {n: (() => {
+                if (type === 'song-intro') {
+                    return [137,137,,137,137,137,137,,142,,137,137,137,137,,142,142,,142,,144,144,144,144,,144,144,144,144,144];
+                }
+                if (type === 'bonus') {
+                    return [147,149,151,152];
+                }
+                if (type === 'explosion') {
+                    return [135];
+                }
+                return [];
+              })(),
+               f: []}
+            ]
+          },
+        ],
+        rowLen: 5513,   // In sample lengths
+        patternLen: 32,  // Rows per pattern
+        endPattern: 0,  // End pattern
+        numChannels: 1  // Number of channels
+    }); 
+
     const GAME_ASSETS = {
         IMAGES: {
             COVER_SHIP: {
@@ -190,54 +250,9 @@
             }
         },
         MUSICS: {
-            INTRO: {
-                songData: [
-                  { // Instrument 0
-                    i: [
-                    1, // OSC1_WAVEFORM
-                    192, // OSC1_VOL
-                    128, // OSC1_SEMI
-                    0, // OSC1_XENV
-                    1, // OSC2_WAVEFORM
-                    191, // OSC2_VOL
-                    116, // OSC2_SEMI
-                    9, // OSC2_DETUNE
-                    0, // OSC2_XENV
-                    0, // NOISE_VOL
-                    6, // ENV_ATTACK
-                    22, // ENV_SUSTAIN
-                    34, // ENV_RELEASE
-                    0, // ENV_EXP_DECAY
-                    0, // ARP_CHORD
-                    0, // ARP_SPEED
-                    0, // LFO_WAVEFORM
-                    69, // LFO_AMT
-                    3, // LFO_FREQ
-                    1, // LFO_FX_FREQ
-                    1, // FX_FILTER
-                    23, // FX_FREQ
-                    167, // FX_RESONANCE
-                    0, // FX_DIST
-                    32, // FX_DRIVE
-                    77, // FX_PAN_AMT
-                    2, // FX_PAN_FREQ
-                    25, // FX_DELAY_AMT
-                    2 // FX_DELAY_TIME
-                    ],
-                    // Patterns
-                    p: [1],
-                    // Columns
-                    c: [
-                      {n: [137,137,,137,137,137,137,,142,,137,137,137,137,,142,142,,142,,144,144,144,144,,144,144,144,144,144],
-                       f: []}
-                    ]
-                  },
-                ],
-                rowLen: 5513,   // In sample lengths
-                patternLen: 32,  // Rows per pattern
-                endPattern: 0,  // End pattern
-                numChannels: 1  // Number of channels
-              }
+            INTRO: createSound('song-intro'),
+            BONUS: createSound('bonus'),
+            EXPLOSION: createSound('explosion')
         }
     };
 
@@ -488,20 +503,20 @@
     /**
      * Play a song or a sound effect on the game audio element.
      * 
-     * @param {*} song The song or effect byte array. If it is null, the audio will be paused
+     * @param {*} sound The song or effect byte array. If it is null, the audio will be paused
      * @param {*} repeat if it is true, the song or effect will be repeated
      */
-    function playSong(song, repeat) {
+    function playSound(sound, repeat) {
         if (!GAME_STATE.audio) {
             return;
         }
         GAME_STATE.audio.pause();
         GAME_STATE.audio.src = '';
-        if (!song) {
+        if (!sound) {
             return;
         }
         const player = new CPlayer();
-        player.init(song);
+        player.init(sound);
         let done = false;
         const interval = setInterval(() => {
             done = player.generate() >= 1;
@@ -589,12 +604,12 @@
                         font: '21px ' + FONT_NAME
                     }
                 ];
-                playSong(GAME_ASSETS.MUSICS.INTRO, true);
+                playSound(GAME_ASSETS.MUSICS.INTRO, true);
                 break;
 
 
             case GAME_SCENE_INTERLUDE:
-                playSong();
+                playSound();
                 GAME_STATE.scene = GAME_SCENE_INTERLUDE;
                 GAME_STATE.sprites = [
                     {
@@ -959,19 +974,22 @@
             }
         }
 
-        const createExplosion = (x, y) => ({
-            id: GAME_SCENE_LVL_1_EXPLOSION,
-            frames: [
-                GAME_ASSETS.IMAGES.EXPLOSION_1.png,
-                GAME_ASSETS.IMAGES.EXPLOSION_2.png,
-                GAME_ASSETS.IMAGES.EXPLOSION_3.png,
-                GAME_ASSETS.IMAGES.EXPLOSION_4.png
-            ],
-            x: x,
-            y: y,
-            res: { w: 32, h: 32 },
-            frame: 0
-        });
+        const createExplosion = (x, y) => {
+            playSound(GAME_ASSETS.MUSICS.EXPLOSION);
+            return {
+                id: GAME_SCENE_LVL_1_EXPLOSION,
+                frames: [
+                    GAME_ASSETS.IMAGES.EXPLOSION_1.png,
+                    GAME_ASSETS.IMAGES.EXPLOSION_2.png,
+                    GAME_ASSETS.IMAGES.EXPLOSION_3.png,
+                    GAME_ASSETS.IMAGES.EXPLOSION_4.png
+                ],
+                x: x,
+                y: y,
+                res: { w: 32, h: 32 },
+                frame: 0
+            };
+        };
 
         const createExplosionWave = (x, y) => ({
             id: GAME_SCENE_LVL_1_EXPLOSION_WAVE,
@@ -1279,6 +1297,7 @@
         // BONUSES
         for (let bonus of bonuses) {
             if (simpleCollisionBox(bonus, shipSprite)) {
+                playSound(GAME_ASSETS.MUSICS.BONUS);
                 switch (bonus.id) {
                     case GAME_SCENE_LVL_1_LIFE_BONUS:
                         GAME_STATE.life += 1;
