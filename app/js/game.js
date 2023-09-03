@@ -24,65 +24,75 @@
      * The images are compressed in Javascript arrays. To comprehend thease are created, see TODO
      * 
      */
-    const createSound = type => ({
-        songData: [
-          { // Instrument 0
-            i: [
-            1, // OSC1_WAVEFORM
-            192, // OSC1_VOL
-            128, // OSC1_SEMI
-            0, // OSC1_XENV
-            1, // OSC2_WAVEFORM
-            191, // OSC2_VOL
-            116, // OSC2_SEMI
-            9, // OSC2_DETUNE
-            0, // OSC2_XENV
-            0, // NOISE_VOL
-            6, // ENV_ATTACK
-            22, // ENV_SUSTAIN
-            34, // ENV_RELEASE
-            0, // ENV_EXP_DECAY
-            0, // ARP_CHORD
-            type === 'song-intro' ? 0 : 25, // ARP_SPEED
-            0, // LFO_WAVEFORM
-            69, // LFO_AMT
-            type === 'song-intro' ? 3 : 90, // LFO_FREQ
-            1, // LFO_FX_FREQ
-            1, // FX_FILTER
-            23, // FX_FREQ
-            167, // FX_RESONANCE
-            0, // FX_DIST
-            32, // FX_DRIVE
-            77, // FX_PAN_AMT
-            type === 'song-intro' ? 2 : 90, // FX_PAN_FREQ
-            type === 'song-intro' ? 25 : 3, // FX_DELAY_AMT
-            type === 'song-intro' ? 1 : 2 // FX_DELAY_TIME
+    const createSound = type => {
+        const isSong = type.indexOf('song') === 0;
+
+        return {
+            songData: [
+              { // Instrument 0
+                i: [
+                1, // OSC1_WAVEFORM
+                192, // OSC1_VOL
+                128, // OSC1_SEMI
+                0, // OSC1_XENV
+                1, // OSC2_WAVEFORM
+                191, // OSC2_VOL
+                116, // OSC2_SEMI
+                9, // OSC2_DETUNE
+                0, // OSC2_XENV
+                0, // NOISE_VOL
+                6, // ENV_ATTACK
+                22, // ENV_SUSTAIN
+                34, // ENV_RELEASE
+                0, // ENV_EXP_DECAY
+                0, // ARP_CHORD
+                isSong ? 0 : 25, // ARP_SPEED
+                0, // LFO_WAVEFORM
+                69, // LFO_AMT
+                isSong ? 3 : 90, // LFO_FREQ
+                1, // LFO_FX_FREQ
+                1, // FX_FILTER
+                23, // FX_FREQ
+                167, // FX_RESONANCE
+                0, // FX_DIST
+                32, // FX_DRIVE
+                77, // FX_PAN_AMT
+                isSong ? 2 : 90, // FX_PAN_FREQ
+                isSong ? 25 : 3, // FX_DELAY_AMT
+                isSong ? 1 : 2 // FX_DELAY_TIME
+                ],
+                // Patterns
+                p: [1],
+                // Columns
+                c: [
+                  {n: (() => {
+                    if (type === 'song-intro') {
+                        return [137,137,,137,137,137,137,,142,,137,137,137,137,,142,142,,142,,144,144,144,144,,144,144,144,144,144];
+                    }
+                    if (type === 'song-scores') {
+                        return [139,139,139,142,142,142,142,142,142,142,142,137,137,137,142,142,142,142,142,142,142,142];
+                    }
+                    if (type === 'bonus') {
+                        return [147,149,151,152];
+                    }
+                    if (type === 'explosion') {
+                        return [135];
+                    }
+                    if (type === 'damage') {
+                        return [149];
+                    }
+                    return [];
+                  })(),
+                   f: []}
+                ]
+              },
             ],
-            // Patterns
-            p: [1],
-            // Columns
-            c: [
-              {n: (() => {
-                if (type === 'song-intro') {
-                    return [137,137,,137,137,137,137,,142,,137,137,137,137,,142,142,,142,,144,144,144,144,,144,144,144,144,144];
-                }
-                if (type === 'bonus') {
-                    return [147,149,151,152];
-                }
-                if (type === 'explosion') {
-                    return [135];
-                }
-                return [];
-              })(),
-               f: []}
-            ]
-          },
-        ],
-        rowLen: 5513,   // In sample lengths
-        patternLen: 32,  // Rows per pattern
-        endPattern: 0,  // End pattern
-        numChannels: 1  // Number of channels
-    }); 
+            rowLen: 5513,   // In sample lengths
+            patternLen: 32,  // Rows per pattern
+            endPattern: 0,  // End pattern
+            numChannels: 1  // Number of channels
+        };
+    }; 
 
     const GAME_ASSETS = {
         IMAGES: {
@@ -252,7 +262,8 @@
         MUSICS: {
             INTRO: createSound('song-intro'),
             BONUS: createSound('bonus'),
-            EXPLOSION: createSound('explosion')
+            EXPLOSION: createSound('explosion'),
+            DAMAGE: createSound('damage')
         }
     };
 
@@ -752,6 +763,7 @@
                 break;
             
             case GAME_SCENE_HIGH_SCORES:
+                playSound(GAME_ASSETS.MUSICS.INTRO, true);
                 GAME_STATE.scene = GAME_SCENE_HIGH_SCORES;
                 GAME_STATE.texts = [
                     {
@@ -1345,6 +1357,7 @@
             if ((!shipSprite.isBlinking) && simpleCollisionBox(enemy, shipSprite)) {
                 shipSprite.isBlinking = 20;
                 GAME_STATE.life -= 1;
+                playSound(GAME_ASSETS.MUSICS.DAMAGE);
                 continue;
             }
             if (allyCannonBall && simpleCollisionBox(allyCannonBall, enemy)) {
