@@ -936,7 +936,7 @@
 
         if (GAME_STATE.gameOver === 0) {
             scoreRegister(+GAME_STATE.score);
-            createScene(GAME_SCENE_TITLE_SCREEN);
+            createScene(GAME_SCENE_HIGH_SCORES);
             return;
         }
 
