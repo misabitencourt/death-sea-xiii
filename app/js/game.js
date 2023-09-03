@@ -788,11 +788,12 @@
                         font: '21px '+FONT_NAME
                     })
                 } else {
+                    const numberPadding = numberStr => numberStr.length < 2 ? ` ${numberStr}` : numberStr;
                     const namePadding = name => (name.length < 30) ? `${name}${' '.repeat(30 - name.length)}` :
                                                                     name.substring(0, 30);
 
                     highScores.forEach((highScore, index) => GAME_STATE.texts.unshift({
-                        text: `${index+1} - ${namePadding(highScore.playerName)} ${highScore.score} points`,
+                        text: `${numberPadding((index+1)+'')} - ${namePadding(highScore.playerName)} ${highScore.score} points`,
                         x: 100,
                         y: 260 + ((index)*25),
                         font: '21px '+FONT_NAME
