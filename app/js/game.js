@@ -372,7 +372,7 @@
      * @returns A list of scores: [{ playserName: string; score: number; scoreAt: string iso date }]
      */
     function getScoreList() {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]').splice(0, 10);
     }
 
     /**
@@ -1054,6 +1054,7 @@
                     forceX: randomIntFromInterval(-3, 3),
                     forceY: randomIntFromInterval(1, 3) || 1,
                     awaiting: randomIntFromInterval(0, 200),
+                    shadow: { color: '#349794', distance: 15 },
                     frame: 0
                 });
             }
@@ -1072,6 +1073,7 @@
                     forceX: randomIntFromInterval(-2, 4),
                     forceY: randomIntFromInterval(1, 3) || 1,
                     awaiting: randomIntFromInterval(0, 200),
+                    shadow: { color: '#349794', distance: -5 },
                     life: 2
                 });
             }
@@ -1090,6 +1092,7 @@
                     forceX: randomIntFromInterval(-4, 4),
                     forceY: randomIntFromInterval(1, 4),
                     awaiting: randomIntFromInterval(0, 200),
+                    shadow: { color: '#349794', distance: -5 },
                     life: 4
                 });
             }
