@@ -1,6 +1,29 @@
 
 (() => {
 
+    /**
+     * 
+     *                                    DEATH SEA XII
+     *  
+     *  This game have been made for a https://js13kgames.com/ Contest! It must be 13Kb zipped! 
+     * 
+     *  This is all the game source code. Please, keep all the code in this scope to safetly and easily mangle the var names 
+     *  on the distribution version.
+     * 
+     *  All of this code will be mangled, minified, compressed in the final version like other Javascript projects in 2023.
+     * 
+     *  The sound-player lib is the only thing that is appart of this file, but it is optional to the execution.
+     */
+
+
+    /**
+     *                                    GAME ASSETS
+     * 
+     * Here it is all game assets like images, sound effects, music and shapes.
+     *
+     * The images are compressed in Javascript arrays. To comprehend thease are created, see TODO
+     * 
+     */
     const GAME_ASSETS = {
         IMAGES: {
             COVER_SHIP: {
@@ -218,6 +241,13 @@
         }
     };
 
+
+    /**
+     *                                    GAME CONSTANTS             
+     * 
+     *                     This space is reserved to the game constants
+     * 
+     */
     const FPS = 60;
     const GAME_STATE = {};
     const GAME_RESOLUTION = { w: 800, h: 600 };
@@ -258,10 +288,20 @@
     const GAME_SCENE_HIGH_SCORES = 4;
 
 
+    /**
+     * Removes an sprite from the game scene
+     * @param {*} sprite 
+     */
     function removeSprite(sprite) {
         GAME_STATE.sprites.splice(GAME_STATE.sprites.indexOf(sprite), 1);
     }
 
+    /**
+     * Simple collision box detection
+     * @param {*} obj1  x: number, y: number, res: {w: number, h: number}
+     * @param {*} obj2  x: number, y: number, res: {w: number, h: number}
+     * @returns true for collision detection
+     */
     function simpleCollisionBox(obj1, obj2) {
         const obj1XEnd = obj1.x + obj1.res.w;
         const obj2XEnd = obj2.x + obj2.res.w;
@@ -279,6 +319,11 @@
         );
     }
 
+    /**
+     * High score check and register fn
+     * 
+     * @param {*} score number of the last score 
+     */
     function scoreRegister(score) {
         const highScoreList = getScoreList();
         const highestScores = highScoreList.filter(record => record.score > highScoreList);
@@ -294,10 +339,19 @@
         localStorage.setItem(STORAGE_KEY, JSON.stringify(highScoreList));
     }
 
+    /**
+     * Returns a highscore list
+     * @returns A list of scores: [{ playserName: string; score: number; scoreAt: string iso date }]
+     */
     function getScoreList() {
         return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
     }
 
+    /**
+     * Uncompress array of image compressed
+     * @param {*} compressed a array with contais compressed matrix of one image, see TODO
+     * @returns Array of a matrix image uncompressed (x and y flatted)
+     */
     function uncompressImage(compressed) {
         const leftPad = (str, length) => {
             while (str.length < length) {
@@ -327,6 +381,16 @@
         }, []);
     }
 
+    /**
+     * This function fetch all the images on the GAME_ASSETS.images,
+     * for each one, it draws the image on a hidden canvas, and extract
+     * its PNG image to the user memory during the game execution.
+     * 
+     * The png image will be storage in the image object >> png
+     * 
+     * If the image whas flagged with generateInverted === true, it will generate
+     * a mirrored version of a png in the prop object >> invertedPng
+     */
     function generateImagesPng() {
         // Shadow generate
         (() => {
@@ -384,6 +448,10 @@
         });
     }
 
+    /**
+     * This function will scale the game canvas to Fit the window size 
+     * @param {*} canvas The game canvas 
+     */
     function scaleCanvas(canvas) {
         const w = window.innerWidth;
         const h = window.innerHeight;
@@ -393,10 +461,20 @@
         canvas.style.transform = `scale(${scale})`;
     }
 
+    /**
+     * Pure function to generate a random number from a given interval
+     * @param {*} min number, min random number
+     * @param {*} max number, max random number
+     * @returns number, a random number between min and max
+     */
     function randomIntFromInterval(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min)
     }
 
+    /**
+     * Create audio element on document HTML in order to play sounds
+     * The audio element refference will be storage on GAME_STATE.audio
+     */
     function createAudio() {
         if (!GAME_STATE.audio) {
             const audio = document.createElement("audio");
@@ -405,6 +483,12 @@
         }
     }
 
+    /**
+     * Play a song or a sound effect on the game audio element.
+     * 
+     * @param {*} song The song or effect byte array. If it is null, the audio will be paused
+     * @param {*} repeat if it is true, the song or effect will be repeated
+     */
     function playSong(song, repeat) {
         if (!GAME_STATE.audio) {
             return;
@@ -429,6 +513,11 @@
         }, 0);
     }
 
+    /**
+     * Create a new game scene, see TODO 
+     * 
+     * @param {*} scene A game scene constant, for example: the title scene, the lvl1 scene.
+     */
     function createScene(scene) {
         switch (scene) {
             case GAME_SCENE_TITLE_SCREEN:
@@ -693,6 +782,14 @@
         }
     }
 
+    /**
+     * Render a frame of the current scene. It will render all sprites, texts and shapes on the
+     * game scene object.
+     * 
+     * It will called after all the scene calc in a FPS frequency
+     * 
+     * @param {*} viewportContext the game canvas 2d context
+     */
     function render(viewportContext) {
 
         // Drawing sprites
@@ -762,6 +859,9 @@
         }
     }
 
+    /**
+     * Logic function of the title screen, it will be called before all the frames in a FPS frequency.
+     */
     function calcTitleScreen() {
         const arrowReleased = GAME_STATE.DOWN_BUTTON_RELEASED || GAME_STATE.UP_BUTTON_RELEASED;
         if (arrowReleased) {
@@ -808,12 +908,18 @@
         }
     }
 
+    /**
+     * Logic function of the game interlude, it will be called before all the frames in a FPS frequency.
+     */
     function calcInterlude() {
         if (GAME_STATE.OK_BUTTON_RELEASED) {
             createScene(GAME_SCENE_LVL_1);
         }
     }
 
+    /**
+     * Logic function of the game level, it will be called before all the frames in a FPS frequency.
+     */
     function calcLvl1() {
         let cannonReady, gameOver;
         gameOver = GAME_STATE.gameOver;
@@ -1219,12 +1325,21 @@
         }
     }
 
+    /**
+     * Logic function of the high score screen, it will be called before all the frames in a FPS frequency.
+     */
     function calcHighScores() {
         if (GAME_STATE.OK_BUTTON_RELEASED) {
             createScene(GAME_SCENE_TITLE_SCREEN);
         }
     }
 
+    /**
+     * Generic Logic function all screens, it will be called before all the frames in a FPS frequency.
+     * 
+     * It does not contains the logic of the screens itself, it will just check what is the current scene
+     * and call its calc function.
+     */
     function calc() {
         switch (GAME_STATE.scene) {
             case GAME_SCENE_TITLE_SCREEN:
@@ -1245,6 +1360,10 @@
         }
     }
 
+    /**
+     * Bootstrapping game function, it will create the game canvas and call some starting functions.
+     * Besides, it sill trigger the game setInterval
+     */
     function init() {
         generateImagesPng();
         document.body.style = 'margin: 0; padding: 0; background-color: #000';
@@ -1268,13 +1387,18 @@
         }, 1000 / FPS);
     }
     
-
+    /**
+     * Function to reset the button releasing flags on the game state
+     */
     function resetButtonsReleased() {
         GAME_STATE.UP_BUTTON_RELEASED = GAME_STATE.LEFT_BUTTON_RELEASED =
             GAME_STATE.RIGHT_BUTTON_RELEASED = GAME_STATE.DOWN_BUTTON_RELEASED =
             GAME_STATE.OK_BUTTON_RELEASED = false;
     }
 
+    /**
+     * Game keyup event listener. It will flag the buttons on the game state
+     */
     document.addEventListener('keyup', event => {
         switch (event.keyCode) {
             case 37:
@@ -1300,6 +1424,9 @@
         }
     });
 
+     /**
+     * Game down event listener. It will flag the buttons on the game state
+     */
     document.addEventListener('keydown', event => {
         switch (event.keyCode) {
             case 37:
@@ -1320,6 +1447,11 @@
         }
     });
 
+     /**
+      * Native html screen wich is show on the page load.
+      * It will as the user if he wants to play audio.
+      * After that, the game bootstrap fn will be trigger.
+      */
     document.body.appendChild((() => {
         const modalDiv = document.createElement('div');
         removeModal = () => modalDiv.parentElement.removeChild(modalDiv);
