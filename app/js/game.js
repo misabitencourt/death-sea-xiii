@@ -155,7 +155,7 @@
 
             CANNON_BALL: {
                 res: { w: 16, h: 16 },
-                compressed: [0,8,-3,32,-3,128,-2,2,-7,32,-43]
+                compressed: [-1,5,64,-2,90,148,-1,1,170,169,-1,6,170,170,64,10,170,150,144,26,170,166,148,42,170,170,164,42,170,170,164,42,170,170,164,42,170,170,164,10,170,170,148,6,170,170,80,2,170,170,64,-1,170,169,-2,42,164,-5]
             },
 
             LETTER_PEN: {
@@ -257,6 +257,7 @@
 
     const SHAPE_SMOKE = 1;
     const SHAPE_SQUARE_GRADIENT = 2;
+    const SHAPE_CIRCLE = 3;
 
     const GAME_SCENE_TITLE_SCREEN = 1;
     const GAME_SCENE_TITLE_SCREEN_TEXT = 1;
@@ -283,6 +284,7 @@
     const GAME_SCENE_LVL_1_BULLET_BONUS = 14;
     const GAME_SCENE_LVL_1_LIFE_BONUS = 15;
     const GAME_SCENE_LVL_1_GAME_OVER = 16;
+    const GAME_SCENE_LVL_1_EXPLOSION_WAVE = 17;
 
     const GAME_SCENE_INTERLUDE = 3;
     const GAME_SCENE_HIGH_SCORES = 4;
@@ -805,6 +807,13 @@
             }
             if (sprite.shape) {
                 switch (sprite.shape) {
+                    case SHAPE_CIRCLE:
+                        viewportContext.beginPath();
+                        viewportContext.strokeStyle = sprite.color || '#333';
+                        viewportContext.arc(sprite.x, sprite.y, sprite.size || 3, 0, 2 * Math.PI);
+                        viewportContext.lineWidth = 2;
+                        viewportContext.stroke();
+                        break;
                     case SHAPE_SMOKE:
                         sprite.lifetime = sprite.lifetime || 0;
                         sprite.lifetime += 1;
@@ -950,7 +959,7 @@
             }
         }
 
-        const createExplostion = (x, y) => ({
+        const createExplosion = (x, y) => ({
             id: GAME_SCENE_LVL_1_EXPLOSION,
             frames: [
                 GAME_ASSETS.IMAGES.EXPLOSION_1.png,
@@ -962,6 +971,15 @@
             y: y,
             res: { w: 32, h: 32 },
             frame: 0
+        });
+
+        const createExplosionWave = (x, y) => ({
+            id: GAME_SCENE_LVL_1_EXPLOSION_WAVE,
+            shape: SHAPE_CIRCLE,
+            color: '#58cfcc',
+            size: 15,
+            x: x,
+            y: y
         });
 
         if (GAME_STATE.bulletBonus) {
@@ -1130,6 +1148,7 @@
                 if (sprite.y < -200) {
                     removeSprite(sprite);
                 }
+                continue;
             }
 
             if (sprite.id === GAME_SCENE_LVL_1_SHIP) {
@@ -1236,6 +1255,14 @@
 
             if (sprite.id === GAME_SCENE_LVL_1_LIFE) {
                 sprite.visible = !(sprite.life > GAME_STATE.life);
+                continue;
+            }
+
+            if (sprite.id === GAME_SCENE_LVL_1_EXPLOSION_WAVE) {
+                sprite.size += 15;
+                if (sprite.size > 600) {
+                    removeSprite(sprite);
+                }
             }
         }
 
@@ -1244,6 +1271,8 @@
             GAME_STATE.gameOver -= 1; // Message timing
         } else if (GAME_STATE.life < 1) {
             GAME_STATE.gameOver = 240;
+            GAME_STATE.sprites.push(createExplosion(shipSprite.x, shipSprite.y));
+            GAME_STATE.sprites.push(createExplosionWave(shipSprite.x, shipSprite.y));
         }
 
         // Collisions
@@ -1273,7 +1302,8 @@
                             continue;
                         }
                     }
-                    GAME_STATE.sprites.push(createExplostion(enemy.x, enemy.y));
+                    GAME_STATE.sprites.push(createExplosion(enemy.x, enemy.y));
+                    GAME_STATE.sprites.push(createExplosionWave(enemy.x, enemy.y));
                     GAME_STATE.score += (() => {
                         switch (enemy.id) {
                             case GAME_SCENE_LVL_1_ENEMY_1:
@@ -1299,7 +1329,8 @@
                 continue;
             }
             if (allyCannonBall && simpleCollisionBox(allyCannonBall, enemy)) {
-                GAME_STATE.sprites.push(createExplostion(enemy.x, enemy.y));
+                GAME_STATE.sprites.push(createExplosion(enemy.x, enemy.y));
+                GAME_STATE.sprites.push(createExplosionWave(enemy.x, enemy.y));
                 removeSprite(allyCannonBall);
                 allyCannonBall = null;
                 enemy.y = GAME_RESOLUTION.h + 200;
