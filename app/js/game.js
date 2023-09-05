@@ -674,7 +674,7 @@
                         y: 380
                     },
                     {
-                        text: 'Captain Cedric Leviathanhunter, 13th March 1326.',
+                        text: 'Captain Cedric Leviathanhunter, 13th March 1213.',
                         x: 20,
                         y: 460,
                         font: '18px '+ FONT_NAME
