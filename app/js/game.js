@@ -614,6 +614,12 @@
                         x: centeredText + 150,
                         y: 330,
                         font: '21px ' + FONT_NAME
+                    },
+                    {
+                        text: 'Use keyboard arrows ←↑→↓  and ↵ enter',
+                        x: 25,
+                        y: 590,
+                        font: '10px ' + FONT_NAME
                     }
                 ];
                 playSound(GAME_ASSETS.MUSICS.INTRO, true);
