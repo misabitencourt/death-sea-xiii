@@ -617,7 +617,7 @@
                     },
                     {
                         text: 'Use keyboard arrows ←↑→↓  and ↵ enter',
-                        x: 25,
+                        x: 10,
                         y: 590,
                         font: '10px ' + FONT_NAME
                     }
