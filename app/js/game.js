@@ -1372,6 +1372,18 @@
                 allyCannonBall = null;
                 enemy.y = GAME_RESOLUTION.h + 200;
                 enemy.x = randomIntFromInterval(0, 750);
+                GAME_STATE.score += (() => {
+                    switch (enemy.id) {
+                        case GAME_SCENE_LVL_1_ENEMY_1:
+                            return 1;
+                        case GAME_SCENE_LVL_1_ENEMY_2:
+                            return 3;
+                        case GAME_SCENE_LVL_1_ENEMY_3:
+                            return 6;
+                        default:
+                            return 1;
+                    }
+                })();
                 continue;
             }
             if (shipSprite.cannonReady) {
