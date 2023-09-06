@@ -281,6 +281,7 @@
     const FONT_NAME = 'monospace';
     const GAME_STORAGE_PREFIX = '__DEATH_SEA_XIII_storage_';
     const STORAGE_KEY = GAME_STORAGE_PREFIX + '_scores';
+    const HIGH_SCORES_LIMIT = 10;
 
     const SHAPE_SMOKE = 1;
     const SHAPE_SQUARE_GRADIENT = 2;
@@ -355,8 +356,8 @@
      */
     function scoreRegister(score) {
         const highScoreList = getScoreList();
-        const highestScores = highScoreList.filter(record => record.score > highScoreList);
-        if (highestScores.length > 5) {
+        const highestScores = highScoreList.filter(record => record.score > score);
+        if (highestScores.length >= HIGH_SCORES_LIMIT) {
             return;
         }
         const playerName = prompt('New Record! Please, enter your name');
@@ -373,7 +374,7 @@
      * @returns A list of scores: [{ playserName: string; score: number; scoreAt: string iso date }]
      */
     function getScoreList() {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]').splice(0, 10);
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]').splice(0, HIGH_SCORES_LIMIT);
     }
 
     /**
@@ -726,7 +727,7 @@
                         prefix: 'SCORE: ',
                         text: '',
                         y: 20,
-                        x: GAME_RESOLUTION.w - 150
+                        x: GAME_RESOLUTION.w - 80
                     },
                     {
                         id: GAME_SCENE_LVL_1_CANNON_READY,
@@ -739,7 +740,7 @@
                         id: GAME_SCENE_LVL_1_GAME_OVER,
                         text: 'GAME OVER',
                         y: 260,
-                        x: (GAME_RESOLUTION.w / 2) - 30,
+                        x: (GAME_RESOLUTION.w / 2) - 40,
                         visible: false
                     }
                 ];
