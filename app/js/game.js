@@ -258,6 +258,12 @@
             ENEMY_3_2: {
                 res: { w: 32, h: 32 },
                 compressed: [8,-1,136,8,-1,8,-2,170,8,160,8,2,8,130,-1,40,2,128,136,128,170,130,8,8,-1,128,42,-1,8,2,40,2,168,160,8,-1,32,2,32,-1,8,8,8,-1,128,2,128,-1,10,2,8,2,2,2,168,-1,130,128,136,8,10,8,-1,10,128,32,40,32,40,32,8,-1,128,8,40,32,32,128,8,-1,128,2,8,32,162,-1,34,-1,168,-1,136,162,136,-1,170,-1,10,-1,138,130,32,10,136,1,66,128,34,136,170,160,10,2,144,128,10,136,128,1,64,-1,165,64,10,136,128,22,64,-1,170,148,10,136,133,90,64,-1,42,165,10,138,22,169,-2,10,165,90,130,106,164,-2,10,170,170,169,170,148,-2,2,170,165,86,170,80,-3,170,165,86,169,64,-3,42,149,86,169,-4,170,170,170,166,128,-2,2,170,149,85,165,160,-2,2,170,105,105,101,96,-2,10,89,89,101,105,96,-2,9,89,85,85,101,104,-2,9,86,85,85,165,88,-2,10,86,153,89,149,88,-2,2,168,165,86,170,160,-4,42,170,-3]
+            },
+
+            FISHES: {
+                c1: '#26a0a0',
+                res: { w: 16, h: 16 },
+                compressed: [-6,16,80,-2,21,84,69,64,16,80,85,80,-2,65,-6,84,-6,16,-2,16,85,-2,85,85,64,-1,16,85,-3,16,-1,1,-2,16,5,80,-1,84,1,-3]
             }
         },
         MUSICS: {
@@ -313,6 +319,7 @@
     const GAME_SCENE_LVL_1_LIFE_BONUS = 15;
     const GAME_SCENE_LVL_1_GAME_OVER = 16;
     const GAME_SCENE_LVL_1_EXPLOSION_WAVE = 17;
+    const GAME_SCENE_LVL_1_FISHES = 18;
 
     const GAME_SCENE_INTERLUDE = 3;
     const GAME_SCENE_HIGH_SCORES = 4;
@@ -721,6 +728,16 @@
                         shadow: { color: '#349794' }
                     }
                 ];
+                for (let i=0; i<randomIntFromInterval(3, 8); i++) {
+                    GAME_STATE.sprites.push({
+                        id: GAME_SCENE_LVL_1_FISHES,
+                        frames: [GAME_ASSETS.IMAGES.FISHES.png],
+                        x: -10 - (randomIntFromInterval(0, 300)),
+                        y: randomIntFromInterval(50, 500),
+                        res: { w: 16, h: 16 },
+                        forceX: randomIntFromInterval(0, 5)
+                    });
+                }
                 GAME_STATE.texts = [
                     {
                         id: GAME_SCENE_LVL_1_SCORE_TEXT,
@@ -1304,6 +1321,15 @@
                 sprite.size += 15;
                 if (sprite.size > 600) {
                     removeSprite(sprite);
+                }
+                continue;
+            }
+
+            if (sprite.id === GAME_SCENE_LVL_1_FISHES) {
+                sprite.x += sprite.forceX * 0.1;
+                if (sprite.x > 850) {
+                    sprite.x = -100;
+                    sprite.y = randomIntFromInterval(50, 500);
                 }
             }
         }
