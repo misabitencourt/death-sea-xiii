@@ -6,7 +6,8 @@
   "scripts": {
     "start": "http-server app -p 8080 -c-1",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -Rf dist && mkdir dist && mkdir dist/js && npm run compress && cp app/index.html dist/ && npm run zipit",
+    "build": "rm -Rf dist && mkdir dist && mkdir dist/js && npm run compress && cp app/index.html dist/",
+    "package": "npm run build && npm run zipit",
     "compress": "uglifyjs --compress --mangle -o dist/js/game.js app/js/game.js && uglifyjs --compress --mangle -o dist/js/sound-player.js app/js/sound-player.js",
     "zipit": "zip -r dist.zip dist"
   },
