@@ -1578,25 +1578,26 @@
             const btnWrp = document.createElement('div');
             btnWrp.classList = 'sound-modal-button-wrp';
             btnWrp.appendChild((() => {
-                const btnWrp = document.createElement('button');
-                btnWrp.textContent = 'Yes';
-                btnWrp.classList = 'primary-button';
-                btnWrp.addEventListener('click', () => {
+                const btn = document.createElement('button');
+                btn.textContent = 'Yes';
+                btn.classList = 'primary-button';
+                setTimeout(() => btn.focus(), 400);
+                btn.addEventListener('click', () => {
                     removeModal();
                     createAudio();
                     init();
                 });
-                return btnWrp;
+                return btn;
             })());
             btnWrp.appendChild((() => {
-                const btnWrp = document.createElement('button');
-                btnWrp.textContent = 'No';
-                btnWrp.classList = 'secondary-button';
-                btnWrp.addEventListener('click', () => {
+                const btn = document.createElement('button');
+                btn.textContent = 'No';
+                btn.classList = 'secondary-button';
+                btn.addEventListener('click', () => {
                     removeModal();
                     init();
                 });
-                return btnWrp;
+                return btn;
             })());
             return btnWrp;
         })());
