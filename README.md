@@ -17,7 +17,7 @@ The [Tiled map editor](https://github.com/mapeditor/tiled) has been used to draw
 
 ## Cloning and running
 
-If you would choose to clone the project on your local machine, I recommend you install 
+If you would choose to clone the project on your local machine, I would recommend that you install 
 [NodeJS](https://nodejs.org/) and run ```npm install``` and ```npm start``` to start a local
 server with the game running on 8080 port.
 
