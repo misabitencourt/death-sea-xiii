@@ -1509,56 +1509,58 @@
             GAME_STATE.OK_BUTTON_RELEASED = false;
     }
 
-    /**
-     * Game keyup event listener. It will flag the buttons on the game state
-     */
-    document.addEventListener('keyup', event => {
-        switch (event.keyCode) {
-            case 37:
-                GAME_STATE.LEFT_BUTTON_RELEASED = true;
-                GAME_STATE.LEFT_BUTTON_PRESSED = false;
-                break;
-            case 38:
-                GAME_STATE.UP_BUTTON_RELEASED = true;
-                GAME_STATE.UP_BUTTON_PRESSED = false;
-                break;
-            case 39:
-                GAME_STATE.RIGHT_BUTTON_RELEASED = true;
-                GAME_STATE.RIGHT_BUTTON_PRESSED = false;
-                break;
-            case 40:
-                GAME_STATE.DOWN_BUTTON_RELEASED = true;
-                GAME_STATE.DOWN_BUTTON_PRESSED = false;
-                break;
-            case 13:
-                GAME_STATE.OK_BUTTON_RELEASED = true;
-                GAME_STATE.OK_BUTTON_PRESSED = false;
-                break;
-        }
-    });
+    const registerKeyEvents = () => {
+        /**
+         * Game keyup event listener. It will flag the buttons on the game state
+         */
+        document.addEventListener('keyup', event => {
+            switch (event.keyCode) {
+                case 37:
+                    GAME_STATE.LEFT_BUTTON_RELEASED = true;
+                    GAME_STATE.LEFT_BUTTON_PRESSED = false;
+                    break;
+                case 38:
+                    GAME_STATE.UP_BUTTON_RELEASED = true;
+                    GAME_STATE.UP_BUTTON_PRESSED = false;
+                    break;
+                case 39:
+                    GAME_STATE.RIGHT_BUTTON_RELEASED = true;
+                    GAME_STATE.RIGHT_BUTTON_PRESSED = false;
+                    break;
+                case 40:
+                    GAME_STATE.DOWN_BUTTON_RELEASED = true;
+                    GAME_STATE.DOWN_BUTTON_PRESSED = false;
+                    break;
+                case 13:
+                    GAME_STATE.OK_BUTTON_RELEASED = true;
+                    GAME_STATE.OK_BUTTON_PRESSED = false;
+                    break;
+            }
+        });
 
-     /**
-     * Game down event listener. It will flag the buttons on the game state
-     */
-    document.addEventListener('keydown', event => {
-        switch (event.keyCode) {
-            case 37:
-                GAME_STATE.LEFT_BUTTON_PRESSED = true;
-                break;
-            case 38:
-                GAME_STATE.UP_BUTTON_PRESSED = true;
-                break;
-            case 39:
-                GAME_STATE.RIGHT_BUTTON_PRESSED = true;
-                break;
-            case 40:
-                GAME_STATE.DOWN_BUTTON_PRESSED = true;
-                break;
-            case 13:
-                GAME_STATE.OK_BUTTON_PRESSED = true;
-                break;
-        }
-    });
+        /**
+         * Game down event listener. It will flag the buttons on the game state
+         */
+        document.addEventListener('keydown', event => {
+            switch (event.keyCode) {
+                case 37:
+                    GAME_STATE.LEFT_BUTTON_PRESSED = true;
+                    break;
+                case 38:
+                    GAME_STATE.UP_BUTTON_PRESSED = true;
+                    break;
+                case 39:
+                    GAME_STATE.RIGHT_BUTTON_PRESSED = true;
+                    break;
+                case 40:
+                    GAME_STATE.DOWN_BUTTON_PRESSED = true;
+                    break;
+                case 13:
+                    GAME_STATE.OK_BUTTON_PRESSED = true;
+                    break;
+            }
+        });
+    };
 
      /**
       * Native html screen wich is show on the page load.
@@ -1586,6 +1588,7 @@
                     removeModal();
                     createAudio();
                     init();
+                    setTimeout(() => registerKeyEvents(), 500);
                 });
                 return btn;
             })());
