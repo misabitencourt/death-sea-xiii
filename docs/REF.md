@@ -58,8 +58,8 @@ just 3 types of colors were used for each images. It was drawn with black and wh
 
  - 00: zero
  - 01: one
- - 02: two
- - 03: three (unused on the game)
+ - 10: two
+ - 11: three (unused on the game)
 
  It means that in 8 bits of code, we can store 4 pixels. The image compression works in that way. 
  The image below represents the game function call sequence:
