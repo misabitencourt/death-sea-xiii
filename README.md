@@ -3,6 +3,9 @@
 It is a less than 13kb size (zipped) Javascript Browser game made for
 [js13kGames competition](https://js13kgames.com/) in 2023.
 
+[Play Here!](https://death-sea-xiii.vercel.app/)
+
+![title](./docs/title.png)
 ![gameplay](./docs/gameplay.gif)
 
 It was made without a framework or engine. The javascript canvas was used
