@@ -1599,6 +1599,7 @@
                 btn.addEventListener('click', () => {
                     removeModal();
                     init();
+                    setTimeout(() => registerKeyEvents(), 500);
                 });
                 return btn;
             })());
